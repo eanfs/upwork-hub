@@ -49,4 +49,13 @@ describe('Storage', () => {
     expect(jobs[0].id).toBe('job-1');
     s.close();
   });
+
+  it('clientPaymentVerified 的 null 与 false 能正确往返', () => {
+    const s = new Storage(':memory:');
+    s.upsertJob(makeJob({ id: 'j-null', clientPaymentVerified: null }), '2026-05-17T10:00:00Z');
+    expect(s.getJob('j-null')!.clientPaymentVerified).toBeNull();
+    s.upsertJob(makeJob({ id: 'j-false', clientPaymentVerified: false }), '2026-05-17T10:00:00Z');
+    expect(s.getJob('j-false')!.clientPaymentVerified).toBe(false);
+    s.close();
+  });
 });

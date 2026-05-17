@@ -41,6 +41,7 @@ export class Storage {
   constructor(dbPath: string) {
     this.db = new Database(dbPath);
     this.db.pragma('journal_mode = WAL');
+    this.db.pragma('foreign_keys = ON');
     this.db.exec(SCHEMA);
   }
 
@@ -127,7 +128,7 @@ export class Storage {
       SELECT j.* FROM jobs j
       JOIN run_jobs rj ON rj.job_id = j.id
       WHERE rj.run_id = ?
-      ORDER BY j.posted_at DESC
+      ORDER BY j.posted_at DESC NULLS LAST
     `).all(runId) as JobRow[];
     return rows.map(rowToJob);
   }
