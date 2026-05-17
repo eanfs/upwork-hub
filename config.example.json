@@ -1,0 +1,19 @@
+{
+  "sources": {
+    "keywords": ["react developer", "python automation"],
+    "savedSearches": [],
+    "categoryFilters": []
+  },
+  "pacing": {
+    "minDelayMs": 3000,
+    "maxDelayMs": 8000,
+    "maxPagesPerSource": 5,
+    "maxDetailsPerRun": 50
+  },
+  "browser": { "headless": false },
+  "paths": {
+    "storageState": "./data/storageState.json",
+    "database": "./data/upwork.db",
+    "exportDir": "./data/exports"
+  }
+}
