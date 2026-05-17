@@ -1,12 +1,13 @@
 /**
- * 发现工具:用已保存的登录会话打开指定 URL,
+ * 发现工具:附接到已登录的真实 Chrome,打开指定 URL,
  * 把所有 upwork.com 的 XHR/fetch JSON 响应转储到 captures/ 目录。
  * 用法: tsx scripts/observe.ts "<要打开的 URL>"
+ * 前置:先运行 `npm run login` 启动 Chrome 并登录 Upwork。
  */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { loadConfig } from '../src/config';
-import { SessionManager } from '../src/session/SessionManager';
+import { ChromeConnector } from '../src/session/ChromeConnector';
 
 async function main(): Promise<void> {
   const targetUrl = process.argv[2];
@@ -20,12 +21,8 @@ async function main(): Promise<void> {
   const outDir = join('captures', new Date().toISOString().replace(/[:.]/g, '-'));
   mkdirSync(outDir, { recursive: true });
 
-  // 观察用有头浏览器,便于人工确认页面正常加载。
-  const session = new SessionManager({
-    storageStatePath: config.paths.storageState,
-    headless: false,
-  });
-  const { browser, context } = await session.launchContext();
+  const connector = new ChromeConnector(config.chrome);
+  const { context } = await connector.connect();
   const page = await context.newPage();
 
   let index = 0;
@@ -48,10 +45,10 @@ async function main(): Promise<void> {
 
   await page.goto(targetUrl, { waitUntil: 'networkidle' });
   console.log(`\n已加载页面。响应转储在 ${outDir}/`);
-  console.log('可在浏览器中手动翻页/点开职位以捕获更多接口。完成后按 Enter 关闭...');
+  console.log('可在浏览器中手动翻页/点开职位以捕获更多接口。完成后按 Enter 关闭本标签...');
   await new Promise<void>((resolve) => process.stdin.once('data', () => resolve()));
 
-  await browser.close();
+  await page.close();
 }
 
 main().catch((err) => {
