@@ -39,4 +39,27 @@ describe('loadConfig', () => {
   it('文件不存在时报错', () => {
     expect(() => loadConfig('/no/such/config.json')).toThrow(/找不到配置文件/);
   });
+
+  it('JSON 非法时报错', () => {
+    expect(() => loadConfig(tmpConfig('{ not json'))).toThrow(/JSON/);
+  });
+
+  it('配置不是对象时报错', () => {
+    expect(() => loadConfig(tmpConfig('[]'))).toThrow(/对象/);
+  });
+
+  it('pacing.maxPagesPerSource 非数字时报错', () => {
+    const bad = { ...validConfig, pacing: { ...validConfig.pacing, maxPagesPerSource: 'x' } };
+    expect(() => loadConfig(tmpConfig(JSON.stringify(bad)))).toThrow(/maxPagesPerSource/);
+  });
+
+  it('browser.headless 非布尔时报错', () => {
+    const bad = { ...validConfig, browser: { headless: 'yes' } };
+    expect(() => loadConfig(tmpConfig(JSON.stringify(bad)))).toThrow(/headless/);
+  });
+
+  it('paths.database 非字符串时报错', () => {
+    const bad = { ...validConfig, paths: { ...validConfig.paths, database: 123 } };
+    expect(() => loadConfig(tmpConfig(JSON.stringify(bad)))).toThrow(/database/);
+  });
 });

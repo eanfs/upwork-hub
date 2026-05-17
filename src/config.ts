@@ -15,6 +15,9 @@ export function loadConfig(path: string): Config {
     fail('不是合法的 JSON');
   }
 
+  if (typeof raw !== 'object' || raw === null || Array.isArray(raw)) {
+    fail('配置必须是 JSON 对象');
+  }
   const c = raw as Partial<Config>;
   if (!c.sources) fail('缺少 sources');
   if (!Array.isArray(c.sources.keywords)) fail('sources.keywords 必须是数组');
