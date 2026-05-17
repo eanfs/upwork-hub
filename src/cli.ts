@@ -1,35 +1,22 @@
-import { createInterface } from 'node:readline';
 import { mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { Command } from 'commander';
 import { loadConfig } from './config';
-import { SessionManager } from './session/SessionManager';
-import { runLogin } from './session/AuthFlow';
+import { ChromeConnector } from './session/ChromeConnector';
 import { Storage } from './storage/Storage';
 import { exportJobsToCsv } from './export/CsvExporter';
 
 const CONFIG_PATH = process.env.UPWORK_HUB_CONFIG ?? './config.json';
 
-function promptEnter(message: string): Promise<void> {
-  const rl = createInterface({ input: process.stdin, output: process.stdout });
-  return new Promise((resolve) => {
-    rl.question(message, () => {
-      rl.close();
-      resolve();
-    });
-  });
-}
-
-async function loginCommand(): Promise<void> {
+function loginCommand(): void {
   const config = loadConfig(CONFIG_PATH);
-  mkdirSync(dirname(config.paths.storageState), { recursive: true });
-  // 登录必须有头,否则无法手动操作。
-  const session = new SessionManager({
-    storageStatePath: config.paths.storageState,
-    headless: false,
-  });
-  await runLogin(session, promptEnter);
-  console.log(`登录会话已保存到 ${config.paths.storageState}`);
+  mkdirSync(config.chrome.userDataDir, { recursive: true });
+  const connector = new ChromeConnector(config.chrome);
+  connector.launchChrome();
+  console.log(
+    `已启动 Chrome(调试端口 ${config.chrome.cdpPort})。\n` +
+      '请在打开的窗口中登录 Upwork,登录后保持该窗口开启,即可运行 collect / observe。',
+  );
 }
 
 function exportCommand(): void {
@@ -56,7 +43,7 @@ async function main(): Promise<void> {
 
   program
     .command('login')
-    .description('打开浏览器手动登录 Upwork 并保存会话')
+    .description('启动带调试端口的真实 Chrome,供你手动登录 Upwork')
     .action(loginCommand);
 
   program

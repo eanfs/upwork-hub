@@ -10,9 +10,12 @@
     "maxPagesPerSource": 5,
     "maxDetailsPerRun": 50
   },
-  "browser": { "headless": false },
+  "chrome": {
+    "cdpPort": 9222,
+    "userDataDir": "./data/chrome-profile",
+    "executablePath": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+  },
   "paths": {
-    "storageState": "./data/storageState.json",
     "database": "./data/upwork.db",
     "exportDir": "./data/exports"
   }
