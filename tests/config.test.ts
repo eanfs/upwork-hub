@@ -14,15 +14,15 @@ function tmpConfig(content: string): string {
 const validConfig = {
   sources: { keywords: ['react'], savedSearches: [], categoryFilters: [] },
   pacing: { minDelayMs: 3000, maxDelayMs: 8000, maxPagesPerSource: 5, maxDetailsPerRun: 50 },
-  browser: { headless: false },
-  paths: { storageState: './data/s.json', database: './data/u.db', exportDir: './data/exports' },
+  chrome: { cdpPort: 9222, userDataDir: './data/chrome-profile', executablePath: '/path/to/chrome' },
+  paths: { database: './data/u.db', exportDir: './data/exports' },
 };
 
 describe('loadConfig', () => {
   it('加载合法配置', () => {
     const cfg = loadConfig(tmpConfig(JSON.stringify(validConfig)));
     expect(cfg.sources.keywords).toEqual(['react']);
-    expect(cfg.pacing.minDelayMs).toBe(3000);
+    expect(cfg.chrome.cdpPort).toBe(9222);
   });
 
   it('缺少 sources 时报错', () => {
@@ -53,9 +53,14 @@ describe('loadConfig', () => {
     expect(() => loadConfig(tmpConfig(JSON.stringify(bad)))).toThrow(/maxPagesPerSource/);
   });
 
-  it('browser.headless 非布尔时报错', () => {
-    const bad = { ...validConfig, browser: { headless: 'yes' } };
-    expect(() => loadConfig(tmpConfig(JSON.stringify(bad)))).toThrow(/headless/);
+  it('chrome.cdpPort 非数字时报错', () => {
+    const bad = { ...validConfig, chrome: { ...validConfig.chrome, cdpPort: '9222' } };
+    expect(() => loadConfig(tmpConfig(JSON.stringify(bad)))).toThrow(/cdpPort/);
+  });
+
+  it('chrome.executablePath 非字符串时报错', () => {
+    const bad = { ...validConfig, chrome: { ...validConfig.chrome, executablePath: 123 } };
+    expect(() => loadConfig(tmpConfig(JSON.stringify(bad)))).toThrow(/executablePath/);
   });
 
   it('paths.database 非字符串时报错', () => {

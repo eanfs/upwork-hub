@@ -31,10 +31,13 @@ export function loadConfig(path: string): Config {
   }
   if (p.minDelayMs > p.maxDelayMs) fail('pacing.minDelayMs 不能大于 maxDelayMs');
 
-  if (!c.browser || typeof c.browser.headless !== 'boolean') fail('browser.headless 必须是布尔值');
+  if (!c.chrome) fail('缺少 chrome');
+  if (typeof c.chrome.cdpPort !== 'number') fail('chrome.cdpPort 必须是数字');
+  if (typeof c.chrome.userDataDir !== 'string') fail('chrome.userDataDir 必须是字符串');
+  if (typeof c.chrome.executablePath !== 'string') fail('chrome.executablePath 必须是字符串');
 
   if (!c.paths) fail('缺少 paths');
-  for (const k of ['storageState', 'database', 'exportDir'] as const) {
+  for (const k of ['database', 'exportDir'] as const) {
     if (typeof c.paths[k] !== 'string') fail(`paths.${k} 必须是字符串`);
   }
 

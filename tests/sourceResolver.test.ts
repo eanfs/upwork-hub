@@ -6,8 +6,8 @@ function cfg(over: Partial<Config['sources']>): Config {
   return {
     sources: { keywords: [], savedSearches: [], categoryFilters: [], ...over },
     pacing: { minDelayMs: 1, maxDelayMs: 2, maxPagesPerSource: 1, maxDetailsPerRun: 1 },
-    browser: { headless: true },
-    paths: { storageState: '', database: '', exportDir: '' },
+    chrome: { cdpPort: 9222, userDataDir: '', executablePath: '' },
+    paths: { database: '', exportDir: '' },
   };
 }
 
