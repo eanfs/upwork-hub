@@ -62,9 +62,12 @@ export interface Config {
     maxPagesPerSource: number;
     maxDetailsPerRun: number;
   };
-  browser: { headless: boolean };
+  chrome: {
+    cdpPort: number;
+    userDataDir: string;
+    executablePath: string;
+  };
   paths: {
-    storageState: string;
     database: string;
     exportDir: string;
   };
