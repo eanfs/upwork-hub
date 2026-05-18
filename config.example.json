@@ -1,0 +1,22 @@
+{
+  "sources": {
+    "keywords": ["react developer", "python automation"],
+    "savedSearches": [],
+    "categoryFilters": []
+  },
+  "pacing": {
+    "minDelayMs": 3000,
+    "maxDelayMs": 8000,
+    "maxPagesPerSource": 5,
+    "maxDetailsPerRun": 50
+  },
+  "chrome": {
+    "cdpPort": 9222,
+    "userDataDir": "./data/chrome-profile",
+    "executablePath": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+  },
+  "paths": {
+    "database": "./data/upwork.db",
+    "exportDir": "./data/exports"
+  }
+}
