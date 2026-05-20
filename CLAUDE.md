@@ -10,6 +10,7 @@ npx vitest run tests/config.test.ts   # 单个测试文件
 npx vitest run -t "加载合法配置"        # 按用例名过滤
 npm run typecheck                     # tsc --noEmit,无类型错误即通过
 npm run login                         # 启动带调试端口的真实 Chrome
+npm run watch                         # 附接 Chrome,被动捕获用户手动搜索/翻页/点详情的响应,按 Enter 入库
 npm run export                        # 导出最近一次运行的职位为 CSV
 ```
 
@@ -29,7 +30,9 @@ npm run export                        # 导出最近一次运行的职位为 CSV
 
 ### 数据流水线
 
-`Config`(`config.ts`,校验 `chrome` 段)→ `SourceResolver`(关键词/已保存搜索 → 列表页 URL)→ `ChromeConnector` 附接 → **[阶段 B:NetworkCapture / ListingCollector / DetailCollector / Normalizer]** → `Storage`(SQLite upsert 去重)→ `CsvExporter`。`Pacer` 在浏览器动作间插入随机延时。
+`Config`(`config.ts`,校验 `chrome` 段)→ `ChromeConnector` 附接 → `Watcher`(被动监听用户在 Chrome 里的搜索/详情响应,按 URL 推断 source)→ `Normalizer`(`userJobSearch` / 详情响应 → `Job`,可合并)→ `Storage`(SQLite upsert 去重)→ `CsvExporter`。
+
+> `SourceResolver` 与 `Pacer` 是阶段 A 留下的工具:前者把配置里的 keywords/savedSearches 展开成 URL(目前只作参考,因为 watch 模式不再程序化导航);后者在动作之间插入随机延时(目前 watch 模式也不需要,留作将来主动模式备用)。阶段 B 实现的 `ListingCollector` / `DetailCollector` 与 `collect` 命令已在阶段 B' 删除,因为真实 Upwork SPA 不响应程序化导航触发的搜索。
 
 `Storage` 三表:`jobs`(以 `id` 为主键,upsert 时 `isNew` 标志区分新旧、`firstSeen` 永不被覆盖)、`runs`、`run_jobs`。
 
@@ -37,8 +40,10 @@ npm run export                        # 导出最近一次运行的职位为 CSV
 
 实现计划在 `docs/superpowers/plans/`,逐任务带 checkbox:
 - **阶段 A**(`...-phase-a.md`)+ **CDP 修订**(`...-cdp-revision.md`):基础模块,已完成。
-- **发现任务**(阶段 A Task 11):用真实会话观察 Upwork 接口,产出 `tests/fixtures/*.json` 与 `docs/superpowers/specs/upwork-api-findings.md` —— 未完成,需人工驱动浏览器通过 Cloudflare。
-- **阶段 B**:NetworkCapture、Normalizer、Collectors、`collect` 命令、`SourceResolver` 的分类筛选分支 —— 依赖发现任务产出,尚未编写计划。
+- **发现任务**(阶段 A Task 11):用真实会话观察 Upwork 接口,产出 `tests/fixtures/*.json` 与 `docs/superpowers/specs/upwork-api-findings.md`,已完成。
+- **阶段 B**(`...-phase-b.md`):NetworkCapture、Normalizer、程序化 ListingCollector / DetailCollector、`collect` 命令、SourceResolver 拒绝 categoryFilters —— 代码完成,但 E2E 证实程序化导航不可用,已在 B' 删除 ListingCollector / DetailCollector / `collect`。
+- **阶段 B'**(`...-phase-b-prime.md`):Watcher 被动监听 + `watch` 命令,取代程序化采集。已完成。
+- 后续:SourceResolver 的分类筛选分支(URL 参数尚未观察),长驻 watcher 持久化,多 profile 支持。
 
 按计划开发时:每个编码任务严格 TDD(先写失败测试再写最小实现),每任务结束提交一次。
 
