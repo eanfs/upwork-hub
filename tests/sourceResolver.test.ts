@@ -33,4 +33,13 @@ describe('resolveSources', () => {
     const r = resolveSources(cfg({ keywords: ['a'], savedSearches: ['https://x'] }));
     expect(r.map((s) => s.type)).toEqual(['keyword', 'savedSearch']);
   });
+
+  it('categoryFilters 非空时抛错(阶段 B 尚未实现)', () => {
+    const c = cfg({
+      keywords: [],
+      savedSearches: [],
+      categoryFilters: [{ category: 'web-development' }],
+    });
+    expect(() => resolveSources(c)).toThrow(/categoryFilters 尚未实现/);
+  });
 });

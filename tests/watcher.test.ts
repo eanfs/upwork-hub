@@ -1,0 +1,206 @@
+import { describe, it, expect } from 'vitest';
+import { EventEmitter } from 'node:events';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { Watcher, inferSource } from '../src/collect/Watcher';
+
+const SEARCH_FIXTURE = JSON.parse(
+  readFileSync(join(__dirname, 'fixtures/search-response.json'), 'utf8'),
+);
+const DETAIL_FIXTURE = JSON.parse(
+  readFileSync(join(__dirname, 'fixtures/job-detail-response.json'), 'utf8'),
+);
+
+class FakeResponse {
+  constructor(
+    private _url: string,
+    private _headers: Record<string, string>,
+    private _body: unknown,
+  ) {}
+  url() { return this._url; }
+  headers() { return this._headers; }
+  async json() { return this._body; }
+}
+
+class FakePage extends EventEmitter {
+  constructor(public currentUrl: string) {
+    super();
+  }
+  url() { return this.currentUrl; }
+}
+
+class FakeContext extends EventEmitter {
+  private _pages: FakePage[] = [];
+  pages() { return this._pages; }
+  addPage(p: FakePage) {
+    this._pages.push(p);
+    this.emit('page', p);
+  }
+  presetPage(p: FakePage) {
+    this._pages.push(p);
+  }
+}
+
+const JSON_CT = { 'content-type': 'application/json' };
+
+async function flush() {
+  await new Promise((r) => setTimeout(r, 10));
+}
+
+describe('Watcher', () => {
+  it('监听已有页面的 userJobSearch 响应并按 ?q= 推断 source', async () => {
+    const page = new FakePage('https://www.upwork.com/nx/search/jobs/?q=react%20developer');
+    const ctx = new FakeContext();
+    ctx.presetPage(page);
+    const watcher = new Watcher(ctx as never);
+    watcher.start();
+
+    page.emit(
+      'response',
+      new FakeResponse(
+        'https://www.upwork.com/api/graphql/v1?alias=userJobSearch',
+        JSON_CT,
+        SEARCH_FIXTURE,
+      ),
+    );
+    await flush();
+
+    const { jobs, listingCount, detailCount } = watcher.collected();
+    const fixtureLen = SEARCH_FIXTURE.data.search.universalSearchNuxt.userJobSearchV1.results.length;
+    expect(listingCount).toBe(fixtureLen);
+    expect(detailCount).toBe(0);
+    expect(jobs).toHaveLength(fixtureLen);
+    expect(jobs[0].source).toBe('keyword:react developer');
+    expect(jobs[0].detailFetched).toBe(false);
+  });
+
+  it('对后续新开的页面也 attach', async () => {
+    const ctx = new FakeContext();
+    const watcher = new Watcher(ctx as never);
+    watcher.start();
+
+    const newPage = new FakePage('https://www.upwork.com/nx/search/jobs/?q=python');
+    ctx.addPage(newPage);
+
+    newPage.emit(
+      'response',
+      new FakeResponse(
+        'https://www.upwork.com/api/graphql/v1?alias=userJobSearch',
+        JSON_CT,
+        SEARCH_FIXTURE,
+      ),
+    );
+    await flush();
+
+    expect(watcher.collected().listingCount).toBeGreaterThan(0);
+    expect(watcher.collected().jobs[0].source).toBe('keyword:python');
+  });
+
+  it('捕获详情响应并产出 detailFetched=true 的 Job', async () => {
+    const page = new FakePage('https://www.upwork.com/nx/search/jobs/?q=k');
+    const ctx = new FakeContext();
+    ctx.presetPage(page);
+    const watcher = new Watcher(ctx as never);
+    watcher.start();
+
+    page.emit(
+      'response',
+      new FakeResponse(
+        'https://www.upwork.com/api/graphql/v1?alias=userJobSearch',
+        JSON_CT,
+        SEARCH_FIXTURE,
+      ),
+    );
+    await flush();
+
+    const listingFirstId =
+      SEARCH_FIXTURE.data.search.universalSearchNuxt.userJobSearchV1.results[0].id;
+    const detailId = DETAIL_FIXTURE.data.jobAuthDetails.opening.job.info.id;
+    expect(detailId).not.toBe(listingFirstId);
+
+    page.emit(
+      'response',
+      new FakeResponse(
+        'https://www.upwork.com/api/graphql/v1?alias=gql-query-get-auth-job-details-v2',
+        JSON_CT,
+        DETAIL_FIXTURE,
+      ),
+    );
+    await flush();
+
+    const { jobs, listingCount, detailCount } = watcher.collected();
+    expect(listingCount).toBeGreaterThan(0);
+    expect(detailCount).toBe(1);
+    const detailOnly = jobs.find((j) => j.id === detailId);
+    expect(detailOnly).toBeDefined();
+    expect(detailOnly!.detailFetched).toBe(true);
+    expect(detailOnly!.category).toBe(
+      DETAIL_FIXTURE.data.jobAuthDetails.opening.job.category.name,
+    );
+  });
+
+  it('忽略 upwork.com 以外的响应与非 JSON 响应', async () => {
+    const page = new FakePage('https://www.upwork.com/nx/search/jobs/?q=x');
+    const ctx = new FakeContext();
+    ctx.presetPage(page);
+    const watcher = new Watcher(ctx as never);
+    watcher.start();
+
+    page.emit(
+      'response',
+      new FakeResponse('https://example.com/api?alias=userJobSearch', JSON_CT, SEARCH_FIXTURE),
+    );
+    page.emit(
+      'response',
+      new FakeResponse(
+        'https://www.upwork.com/api/graphql/v1?alias=userJobSearch',
+        { 'content-type': 'text/html' },
+        SEARCH_FIXTURE,
+      ),
+    );
+    await flush();
+
+    expect(watcher.collected().listingCount).toBe(0);
+  });
+
+  it('inferSource 按 URL 路径推断:搜索 / 已保存搜索 / best-matches / 详情页 / 其他', () => {
+    expect(inferSource('https://www.upwork.com/nx/search/jobs/?q=react%20developer')).toBe(
+      'keyword:react developer',
+    );
+    expect(inferSource('https://www.upwork.com/nx/search/jobs/')).toBe('search:unknown');
+    expect(inferSource('https://www.upwork.com/nx/find-work/saved/abc123')).toBe(
+      'savedSearch:/nx/find-work/saved/abc123',
+    );
+    expect(inferSource('https://www.upwork.com/nx/find-work/best-matches')).toBe(
+      'feed:best-matches',
+    );
+    expect(inferSource('https://www.upwork.com/jobs/~02XXXXX')).toBe('job-detail-page');
+    expect(inferSource('https://www.upwork.com/nx/some/other/path')).toBe(
+      'page:/nx/some/other/path',
+    );
+    expect(inferSource('not-a-url')).toBe('page:not-a-url');
+  });
+
+  it('同 id 的列表响应被后到的覆盖(用户翻回原页时)', async () => {
+    const page = new FakePage('https://www.upwork.com/nx/search/jobs/?q=k');
+    const ctx = new FakeContext();
+    ctx.presetPage(page);
+    const watcher = new Watcher(ctx as never);
+    watcher.start();
+
+    page.emit('response', new FakeResponse(
+      'https://www.upwork.com/api/graphql/v1?alias=userJobSearch',
+      JSON_CT, SEARCH_FIXTURE,
+    ));
+    await flush();
+    const firstCount = watcher.collected().listingCount;
+
+    page.emit('response', new FakeResponse(
+      'https://www.upwork.com/api/graphql/v1?alias=userJobSearch',
+      JSON_CT, SEARCH_FIXTURE,
+    ));
+    await flush();
+
+    expect(watcher.collected().listingCount).toBe(firstCount);
+  });
+});

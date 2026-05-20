@@ -45,12 +45,12 @@
 - Create: `tsconfig.json`
 - Create: `.gitignore`
 
-- [ ] **Step 1: 初始化 git 仓库**
+- [x] **Step 1: 初始化 git 仓库**
 
 Run: `git init`
 Expected: `Initialized empty Git repository`
 
-- [ ] **Step 2: 创建 `package.json`**
+- [x] **Step 2: 创建 `package.json`**
 
 ```json
 {
@@ -80,7 +80,7 @@ Expected: `Initialized empty Git repository`
 }
 ```
 
-- [ ] **Step 3: 创建 `tsconfig.json`**
+- [x] **Step 3: 创建 `tsconfig.json`**
 
 ```json
 {
@@ -100,7 +100,7 @@ Expected: `Initialized empty Git repository`
 }
 ```
 
-- [ ] **Step 4: 创建 `.gitignore`**
+- [x] **Step 4: 创建 `.gitignore`**
 
 ```
 node_modules/
@@ -108,17 +108,17 @@ dist/
 data/
 ```
 
-- [ ] **Step 5: 安装依赖并下载 Chromium**
+- [x] **Step 5: 安装依赖并下载 Chromium**
 
 Run: `npm install && npx playwright install chromium`
 Expected: 依赖安装完成,Chromium 浏览器下载完成,无报错。
 
-- [ ] **Step 6: 验证依赖就位**
+- [x] **Step 6: 验证依赖就位**
 
 Run: `npm ls better-sqlite3 commander playwright vitest tsx typescript`
 Expected: 六个包都列出版本号,无 `UNMET DEPENDENCY`。
 
-- [ ] **Step 7: 提交**
+- [x] **Step 7: 提交**
 
 ```bash
 git add package.json package-lock.json tsconfig.json .gitignore
@@ -134,7 +134,7 @@ git commit -m "chore: 初始化工程脚手架"
 
 > 纯类型文件,无运行时行为,不写单元测试;以 `tsc --noEmit` 编译通过作为验证。
 
-- [ ] **Step 1: 创建 `src/types.ts`**
+- [x] **Step 1: 创建 `src/types.ts`**
 
 ```typescript
 export type BudgetType = 'fixed' | 'hourly';
@@ -210,12 +210,12 @@ export interface Config {
 }
 ```
 
-- [ ] **Step 2: 验证编译通过**
+- [x] **Step 2: 验证编译通过**
 
 Run: `npm run typecheck`
 Expected: 无输出、退出码 0(`src/types.ts` 编译通过)。
 
-- [ ] **Step 3: 提交**
+- [x] **Step 3: 提交**
 
 ```bash
 git add src/types.ts
@@ -230,7 +230,7 @@ git commit -m "feat: 添加领域类型定义"
 - Create: `src/config.ts`
 - Test: `tests/config.test.ts`
 
-- [ ] **Step 1: 编写失败测试**
+- [x] **Step 1: 编写失败测试**
 
 ```typescript
 import { describe, it, expect } from 'vitest';
@@ -277,12 +277,12 @@ describe('loadConfig', () => {
 });
 ```
 
-- [ ] **Step 2: 运行测试,确认失败**
+- [x] **Step 2: 运行测试,确认失败**
 
 Run: `npx vitest run tests/config.test.ts`
 Expected: FAIL —— `loadConfig` 未定义 / 模块不存在。
 
-- [ ] **Step 3: 编写最小实现**
+- [x] **Step 3: 编写最小实现**
 
 ```typescript
 import { existsSync, readFileSync } from 'node:fs';
@@ -326,12 +326,12 @@ export function loadConfig(path: string): Config {
 }
 ```
 
-- [ ] **Step 4: 运行测试,确认通过**
+- [x] **Step 4: 运行测试,确认通过**
 
 Run: `npx vitest run tests/config.test.ts`
 Expected: PASS,4 个用例全过。
 
-- [ ] **Step 5: 提交**
+- [x] **Step 5: 提交**
 
 ```bash
 git add src/config.ts tests/config.test.ts
@@ -347,7 +347,7 @@ git commit -m "feat: 添加配置加载与校验"
 - Create: `src/storage/Storage.ts`
 - Test: `tests/storage.test.ts`
 
-- [ ] **Step 1: 创建 `src/storage/schema.sql`**
+- [x] **Step 1: 创建 `src/storage/schema.sql`**
 
 ```sql
 CREATE TABLE IF NOT EXISTS jobs (
@@ -395,7 +395,7 @@ CREATE TABLE IF NOT EXISTS run_jobs (
 );
 ```
 
-- [ ] **Step 2: 编写失败测试**
+- [x] **Step 2: 编写失败测试**
 
 ```typescript
 import { describe, it, expect } from 'vitest';
@@ -452,12 +452,12 @@ describe('Storage', () => {
 });
 ```
 
-- [ ] **Step 3: 运行测试,确认失败**
+- [x] **Step 3: 运行测试,确认失败**
 
 Run: `npx vitest run tests/storage.test.ts`
 Expected: FAIL —— `Storage` 模块不存在。
 
-- [ ] **Step 4: 编写 `src/storage/Storage.ts`**
+- [x] **Step 4: 编写 `src/storage/Storage.ts`**
 
 ```typescript
 import Database from 'better-sqlite3';
@@ -600,12 +600,12 @@ export class Storage {
 }
 ```
 
-- [ ] **Step 5: 运行测试,确认通过**
+- [x] **Step 5: 运行测试,确认通过**
 
 Run: `npx vitest run tests/storage.test.ts`
 Expected: PASS,3 个用例全过。
 
-- [ ] **Step 6: 提交**
+- [x] **Step 6: 提交**
 
 ```bash
 git add src/storage/schema.sql src/storage/Storage.ts tests/storage.test.ts
@@ -622,7 +622,7 @@ git commit -m "feat: 添加 SQLite 存储层"
 
 > 阶段 A 只处理 `keywords` 与 `savedSearches`;`categoryFilters` 的 URL 参数映射依赖发现任务的结论,留阶段 B 扩展。
 
-- [ ] **Step 1: 编写失败测试**
+- [x] **Step 1: 编写失败测试**
 
 ```typescript
 import { describe, it, expect } from 'vitest';
@@ -663,12 +663,12 @@ describe('resolveSources', () => {
 });
 ```
 
-- [ ] **Step 2: 运行测试,确认失败**
+- [x] **Step 2: 运行测试,确认失败**
 
 Run: `npx vitest run tests/sourceResolver.test.ts`
 Expected: FAIL —— `resolveSources` 模块不存在。
 
-- [ ] **Step 3: 编写 `src/collect/SourceResolver.ts`**
+- [x] **Step 3: 编写 `src/collect/SourceResolver.ts`**
 
 ```typescript
 import type { Config } from '../types';
@@ -702,12 +702,12 @@ export function resolveSources(config: Config): ResolvedSource[] {
 }
 ```
 
-- [ ] **Step 4: 运行测试,确认通过**
+- [x] **Step 4: 运行测试,确认通过**
 
 Run: `npx vitest run tests/sourceResolver.test.ts`
 Expected: PASS,3 个用例全过。
 
-- [ ] **Step 5: 提交**
+- [x] **Step 5: 提交**
 
 ```bash
 git add src/collect/SourceResolver.ts tests/sourceResolver.test.ts
@@ -722,7 +722,7 @@ git commit -m "feat: 添加来源解析(关键词与已保存搜索)"
 - Create: `src/pacer/Pacer.ts`
 - Test: `tests/pacer.test.ts`
 
-- [ ] **Step 1: 编写失败测试**
+- [x] **Step 1: 编写失败测试**
 
 ```typescript
 import { describe, it, expect } from 'vitest';
@@ -751,12 +751,12 @@ describe('Pacer', () => {
 });
 ```
 
-- [ ] **Step 2: 运行测试,确认失败**
+- [x] **Step 2: 运行测试,确认失败**
 
 Run: `npx vitest run tests/pacer.test.ts`
 Expected: FAIL —— `Pacer` 模块不存在。
 
-- [ ] **Step 3: 编写 `src/pacer/Pacer.ts`**
+- [x] **Step 3: 编写 `src/pacer/Pacer.ts`**
 
 ```typescript
 /** 在浏览器动作之间插入随机延时,模拟真人节奏。 */
@@ -773,12 +773,12 @@ export class Pacer {
 }
 ```
 
-- [ ] **Step 4: 运行测试,确认通过**
+- [x] **Step 4: 运行测试,确认通过**
 
 Run: `npx vitest run tests/pacer.test.ts`
 Expected: PASS,3 个用例全过。
 
-- [ ] **Step 5: 提交**
+- [x] **Step 5: 提交**
 
 ```bash
 git add src/pacer/Pacer.ts tests/pacer.test.ts
@@ -793,7 +793,7 @@ git commit -m "feat: 添加随机延时节奏控制"
 - Create: `src/export/CsvExporter.ts`
 - Test: `tests/csvExporter.test.ts`
 
-- [ ] **Step 1: 编写失败测试**
+- [x] **Step 1: 编写失败测试**
 
 ```typescript
 import { describe, it, expect } from 'vitest';
@@ -848,12 +848,12 @@ describe('exportJobsToCsv', () => {
 });
 ```
 
-- [ ] **Step 2: 运行测试,确认失败**
+- [x] **Step 2: 运行测试,确认失败**
 
 Run: `npx vitest run tests/csvExporter.test.ts`
 Expected: FAIL —— `exportJobsToCsv` 模块不存在。
 
-- [ ] **Step 3: 编写 `src/export/CsvExporter.ts`**
+- [x] **Step 3: 编写 `src/export/CsvExporter.ts`**
 
 ```typescript
 import { writeFileSync, mkdirSync } from 'node:fs';
@@ -907,12 +907,12 @@ export function exportJobsToCsv(jobs: StoredJob[], exportDir: string): string {
 }
 ```
 
-- [ ] **Step 4: 运行测试,确认通过**
+- [x] **Step 4: 运行测试,确认通过**
 
 Run: `npx vitest run tests/csvExporter.test.ts`
 Expected: PASS,3 个用例全过。
 
-- [ ] **Step 5: 提交**
+- [x] **Step 5: 提交**
 
 ```bash
 git add src/export/CsvExporter.ts tests/csvExporter.test.ts
@@ -929,7 +929,7 @@ git commit -m "feat: 添加 CSV 导出"
 
 > 集成测试:启动真实 Chromium,但不访问 Upwork。依赖 Task 1 已执行 `npx playwright install chromium`。
 
-- [ ] **Step 1: 编写失败测试**
+- [x] **Step 1: 编写失败测试**
 
 ```typescript
 import { describe, it, expect } from 'vitest';
@@ -965,12 +965,12 @@ describe('SessionManager', () => {
 });
 ```
 
-- [ ] **Step 2: 运行测试,确认失败**
+- [x] **Step 2: 运行测试,确认失败**
 
 Run: `npx vitest run tests/sessionManager.test.ts`
 Expected: FAIL —— `SessionManager` 模块不存在。
 
-- [ ] **Step 3: 编写 `src/session/SessionManager.ts`**
+- [x] **Step 3: 编写 `src/session/SessionManager.ts`**
 
 ```typescript
 import { existsSync } from 'node:fs';
@@ -1005,12 +1005,12 @@ export class SessionManager {
 }
 ```
 
-- [ ] **Step 4: 运行测试,确认通过**
+- [x] **Step 4: 运行测试,确认通过**
 
 Run: `npx vitest run tests/sessionManager.test.ts`
 Expected: PASS,2 个用例全过(第二个会真实启动 Chromium,约数秒)。
 
-- [ ] **Step 5: 提交**
+- [x] **Step 5: 提交**
 
 ```bash
 git add src/session/SessionManager.ts tests/sessionManager.test.ts
@@ -1027,7 +1027,7 @@ git commit -m "feat: 添加浏览器会话管理"
 
 > `runLogin` 接受注入的会话对象与「等待用户」函数,便于在不开真实浏览器、不连 Upwork 的情况下测试编排逻辑。
 
-- [ ] **Step 1: 编写失败测试**
+- [x] **Step 1: 编写失败测试**
 
 ```typescript
 import { describe, it, expect } from 'vitest';
@@ -1075,12 +1075,12 @@ describe('runLogin', () => {
 });
 ```
 
-- [ ] **Step 2: 运行测试,确认失败**
+- [x] **Step 2: 运行测试,确认失败**
 
 Run: `npx vitest run tests/authFlow.test.ts`
 Expected: FAIL —— `runLogin` 模块不存在。
 
-- [ ] **Step 3: 编写 `src/session/AuthFlow.ts`**
+- [x] **Step 3: 编写 `src/session/AuthFlow.ts`**
 
 ```typescript
 import type { Browser, BrowserContext } from 'playwright';
@@ -1110,12 +1110,12 @@ export async function runLogin(
 }
 ```
 
-- [ ] **Step 4: 运行测试,确认通过**
+- [x] **Step 4: 运行测试,确认通过**
 
 Run: `npx vitest run tests/authFlow.test.ts`
 Expected: PASS,2 个用例全过。
 
-- [ ] **Step 5: 提交**
+- [x] **Step 5: 提交**
 
 ```bash
 git add src/session/AuthFlow.ts tests/authFlow.test.ts
@@ -1132,7 +1132,7 @@ git commit -m "feat: 添加手动登录编排"
 
 > CLI 是把已测模块组装起来的薄编排层,不写单元测试;以手动运行命令验证。`collect` 命令在阶段 B 添加。
 
-- [ ] **Step 1: 创建 `config.example.json`**
+- [x] **Step 1: 创建 `config.example.json`**
 
 ```json
 {
@@ -1156,7 +1156,7 @@ git commit -m "feat: 添加手动登录编排"
 }
 ```
 
-- [ ] **Step 2: 创建 `src/cli.ts`**
+- [x] **Step 2: 创建 `src/cli.ts`**
 
 ```typescript
 import { createInterface } from 'node:readline';
@@ -1233,22 +1233,22 @@ main().catch((err) => {
 });
 ```
 
-- [ ] **Step 3: 验证 `export` 命令(空库情形)**
+- [x] **Step 3: 验证 `export` 命令(空库情形)**
 
 Run: `cp config.example.json config.json && npm run export`
 Expected: 打印 `数据库中还没有运行记录,无可导出的职位。`,退出码 0。
 
-- [ ] **Step 4: 验证 `login` 命令能启动(随后手动关掉浏览器与终端)**
+- [x] **Step 4: 验证 `login` 命令能启动(随后手动关掉浏览器与终端)**
 
 Run: `npm run login`
 Expected: 弹出 Chromium 窗口并停在 Upwork 登录页,终端显示等待提示。验证到此即可,按 Enter 让其保存并退出(此时未真正登录也可,只为验证流程跑通)。
 
-- [ ] **Step 5: 类型检查**
+- [x] **Step 5: 类型检查**
 
 Run: `npm run typecheck`
 Expected: 无输出、退出码 0。
 
-- [ ] **Step 6: 提交**
+- [x] **Step 6: 提交**
 
 ```bash
 git add src/cli.ts config.example.json
@@ -1266,7 +1266,7 @@ git commit -m "feat: 添加 CLI 入口(login 与 export 命令)"
 
 > 本任务不是 TDD 编码任务,而是一次受控的真实观察。目标:用真实登录会话搞清楚 Upwork 列表/详情页调用了哪些接口、响应结构如何,并把真实响应存成 fixture,供阶段 B 编写 NetworkCapture 与 Normalizer。
 
-- [ ] **Step 1: 编写观察脚本 `scripts/observe.ts`**
+- [x] **Step 1: 编写观察脚本 `scripts/observe.ts`**
 
 ```typescript
 /**
@@ -1331,31 +1331,31 @@ main().catch((err) => {
 });
 ```
 
-- [ ] **Step 2: 创建 fixture 目录占位**
+- [x] **Step 2: 创建 fixture 目录占位**
 
 Run: `mkdir -p tests/fixtures && touch tests/fixtures/.gitkeep`
 Expected: `tests/fixtures/.gitkeep` 存在。
 
-- [ ] **Step 3: 真实登录**
+- [x] **Step 3: 真实登录**
 
 Run: `npm run login`
 操作:在弹出的浏览器中用提供的账号完成真实登录(含 2FA),回到终端按 Enter。
 Expected: 终端打印 `登录会话已保存到 ./data/storageState.json`。
 
-- [ ] **Step 4: 观察「关键词搜索列表页」**
+- [x] **Step 4: 观察「关键词搜索列表页」**
 
 Run: `npx tsx scripts/observe.ts "https://www.upwork.com/nx/search/jobs/?q=react%20developer"`
 操作:页面加载后,在浏览器里手动翻到第 2 页,再按 Enter 关闭。
 Expected: `captures/<时间戳>/` 下出现若干 `NNN.json` 文件,终端逐条打印捕获的 URL。
 
-- [ ] **Step 5: 观察「职位详情页」**
+- [x] **Step 5: 观察「职位详情页」**
 
 操作:从上一步的搜索结果里复制任意一个职位详情页 URL。
 Run: `npx tsx scripts/observe.ts "<职位详情页 URL>"`
 操作:加载后按 Enter 关闭。
 Expected: `captures/<时间戳>/` 下出现详情页相关的 JSON 转储。
 
-- [ ] **Step 6: 甄别并保存 fixture**
+- [x] **Step 6: 甄别并保存 fixture**
 
 操作:翻看 `captures/` 里的 JSON 文件,找出**真正包含职位列表数据**和**职位详情数据**的那一两个响应。把它们的 `body` 内容(即真实响应 JSON)保存为:
 - `tests/fixtures/search-response.json` —— 搜索列表接口的真实响应
@@ -1363,7 +1363,7 @@ Expected: `captures/<时间戳>/` 下出现详情页相关的 JSON 转储。
 
 Expected: 两个 fixture 文件存在且是合法 JSON(`node -e "JSON.parse(require('fs').readFileSync('tests/fixtures/search-response.json','utf8'))"` 不报错,详情文件同理)。
 
-- [ ] **Step 7: 编写接口结构文档 `docs/superpowers/specs/upwork-api-findings.md`**
+- [x] **Step 7: 编写接口结构文档 `docs/superpowers/specs/upwork-api-findings.md`**
 
 文档需写明(基于实际观察填写,不是模板):
 - **列表接口**:URL 模式、请求方法、翻页机制(查询参数 / 游标 / POST body),响应里职位数组所在的 JSON 路径。
@@ -1372,7 +1372,7 @@ Expected: 两个 fixture 文件存在且是合法 JSON(`node -e "JSON.parse(requ
 - **分类筛选 URL 参数**:分类、预算范围、经验等级等筛选项分别对应哪些查询参数(供阶段 B 的 SourceResolver 扩展)。
 - **职位唯一 ID**:响应里哪个字段可作为 `jobs.id` 主键。
 
-- [ ] **Step 8: 提交**
+- [x] **Step 8: 提交**
 
 ```bash
 git add scripts/observe.ts tests/fixtures docs/superpowers/specs/upwork-api-findings.md
@@ -1385,12 +1385,12 @@ git commit -m "chore: 添加网络观察脚本与 Upwork 接口 fixture"
 
 ## 阶段 A 完成标准
 
-- [ ] `npm run test` —— 全部测试通过(config / storage / sourceResolver / pacer / csvExporter / sessionManager / authFlow)。
-- [ ] `npm run typecheck` —— 无类型错误。
-- [ ] `npm run login` —— 能完成真实登录并保存会话。
-- [ ] `npm run export` —— 空库时给出友好提示。
-- [ ] `tests/fixtures/search-response.json` 与 `job-detail-response.json` 是真实 Upwork 响应。
-- [ ] `docs/superpowers/specs/upwork-api-findings.md` 记录了列表/详情接口结构、字段定位表、分类筛选参数。
+- [x] `npm run test` —— 全部测试通过(config / storage / sourceResolver / pacer / csvExporter / sessionManager / authFlow)。
+- [x] `npm run typecheck` —— 无类型错误。
+- [x] `npm run login` —— 能完成真实登录并保存会话。
+- [x] `npm run export` —— 空库时给出友好提示。
+- [x] `tests/fixtures/search-response.json` 与 `job-detail-response.json` 是真实 Upwork 响应。
+- [x] `docs/superpowers/specs/upwork-api-findings.md` 记录了列表/详情接口结构、字段定位表、分类筛选参数。
 
 满足后即可进入**阶段 B 计划**:基于 fixture 与接口文档,以 TDD 实现 NetworkCapture、Normalizer、ListingCollector、DetailCollector、`collect` 命令,以及 SourceResolver 的分类筛选分支。
 

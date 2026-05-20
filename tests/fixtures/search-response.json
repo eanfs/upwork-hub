@@ -1,0 +1,1223 @@
+{
+  "data": {
+    "search": {
+      "universalSearchNuxt": {
+        "userJobSearchV1": {
+          "paging": {
+            "total": 3897,
+            "offset": 0,
+            "count": 10
+          },
+          "facets": {
+            "jobType": [
+              {
+                "key": "fixed",
+                "value": 1893
+              },
+              {
+                "key": "hourly",
+                "value": 2004
+              },
+              {
+                "key": "weekly_retainer",
+                "value": 0
+              }
+            ],
+            "workload": [
+              {
+                "key": "part_time",
+                "value": 3063
+              },
+              {
+                "key": "full_time",
+                "value": 2586
+              },
+              {
+                "key": "as_needed,part_time",
+                "value": 3127
+              },
+              {
+                "key": "as_needed",
+                "value": 1957
+              },
+              {
+                "key": "none",
+                "value": 1893
+              }
+            ],
+            "clientHires": [
+              {
+                "key": "0",
+                "value": 1316
+              },
+              {
+                "key": "1-9",
+                "value": 917
+              },
+              {
+                "key": "10-",
+                "value": 1658
+              }
+            ],
+            "durationV3": [
+              {
+                "key": "ongoing",
+                "value": 2373
+              },
+              {
+                "key": "week",
+                "value": 2270
+              },
+              {
+                "key": "month",
+                "value": 2806
+              },
+              {
+                "key": "semester",
+                "value": 2127
+              }
+            ],
+            "amount": [
+              {
+                "key": "5000-",
+                "value": 126
+              },
+              {
+                "key": "*",
+                "value": 1893
+              },
+              {
+                "key": "0-99",
+                "value": 366
+              },
+              {
+                "key": "100-499",
+                "value": 904
+              },
+              {
+                "key": "1000-4999",
+                "value": 316
+              },
+              {
+                "key": "500-999",
+                "value": 181
+              }
+            ],
+            "contractorTier": [
+              {
+                "key": "1",
+                "value": 107
+              },
+              {
+                "key": "2",
+                "value": 2379
+              },
+              {
+                "key": "3",
+                "value": 1411
+              }
+            ],
+            "contractToHire": [
+              {
+                "key": "false",
+                "value": 2881
+              },
+              {
+                "key": "true",
+                "value": 1016
+              }
+            ],
+            "paymentVerified": [
+              {
+                "key": "verified",
+                "value": 3435
+              }
+            ],
+            "proposals": [
+              {
+                "key": "5-9",
+                "value": 225
+              },
+              {
+                "key": "20-49",
+                "value": 1292
+              },
+              {
+                "key": "0-4",
+                "value": 640
+              },
+              {
+                "key": "10-14",
+                "value": 370
+              },
+              {
+                "key": "*",
+                "value": 3897
+              },
+              {
+                "key": "15-19",
+                "value": 371
+              }
+            ],
+            "previousClients": [
+              {
+                "key": "total",
+                "value": 0
+              }
+            ]
+          },
+          "results": [
+            {
+              "id": "2056732372898838139",
+              "title": "Senior H^Full^H H^Stack^H H^Developer^H for API Integration",
+              "description": "We are seeking an experienced H^React.js^H H^developer^H to enhance our application by developing new features and integrating APIs. The ideal candidate will have a strong background in H^full^H H^stack^H H^development^H, with a focus on RESTful architecture and API H^development^H. You will be responsible for designing, implementing, and testing new features, as well as ensuring seamless API integration. This role requires a proactive approach to problem-solving and collaboration with our team to deliver high-quality solutions.",
+              "relevanceEncoded": "{\"position\":\"0\"}",
+              "ontologySkills": [
+                {
+                  "uid": "1031626714051493888",
+                  "parentSkillUid": null,
+                  "prefLabel": "API Development",
+                  "prettyName": "API Development",
+                  "freeText": null,
+                  "highlighted": true
+                },
+                {
+                  "uid": "1031626774877290496",
+                  "parentSkillUid": null,
+                  "prefLabel": "RESTful Architecture",
+                  "prettyName": "RESTful Architecture",
+                  "freeText": null,
+                  "highlighted": false
+                },
+                {
+                  "uid": "1031626751796035584",
+                  "parentSkillUid": null,
+                  "prefLabel": "JSON",
+                  "prettyName": "JSON",
+                  "freeText": null,
+                  "highlighted": false
+                },
+                {
+                  "uid": "996364628025274383",
+                  "parentSkillUid": null,
+                  "prefLabel": "JavaScript",
+                  "prettyName": "JavaScript",
+                  "freeText": null,
+                  "highlighted": false
+                }
+              ],
+              "isSTSVectorSearchResult": null,
+              "applied": false,
+              "upworkHistoryData": {
+                "client": {
+                  "paymentVerificationStatus": "VERIFIED",
+                  "country": "USA",
+                  "totalReviews": 0,
+                  "totalFeedback": 0,
+                  "hasFinancialPrivacy": false,
+                  "totalSpent": {
+                    "isoCurrencyCode": "USD",
+                    "amount": "0.0"
+                  }
+                },
+                "freelancerClientRelation": {
+                  "lastContractRid": null,
+                  "companyName": null,
+                  "lastContractTitle": null
+                }
+              },
+              "jobTile": {
+                "job": {
+                  "id": "2056732372898838139",
+                  "ciphertext": "~022056732372898838139",
+                  "jobType": "FIXED",
+                  "weeklyRetainerBudget": null,
+                  "hourlyBudgetMax": null,
+                  "hourlyBudgetMin": null,
+                  "hourlyEngagementType": null,
+                  "contractorTier": "IntermediateLevel",
+                  "sourcingTimestamp": null,
+                  "createTime": "2026-05-19T13:43:04.983Z",
+                  "publishTime": "2026-05-19T13:56:25.200Z",
+                  "enterpriseJob": false,
+                  "personsToHire": 1,
+                  "premium": false,
+                  "totalApplicants": 25,
+                  "hourlyEngagementDuration": null,
+                  "fixedPriceAmount": {
+                    "isoCurrencyCode": null,
+                    "amount": "400.0"
+                  },
+                  "fixedPriceEngagementDuration": {
+                    "id": "474250516458926082",
+                    "rid": 3,
+                    "label": "1 to 3 months",
+                    "weeks": 9,
+                    "ctime": "2014-06-04T17:59:10.123Z",
+                    "mtime": "2014-06-04T17:59:10.123Z"
+                  }
+                }
+              }
+            },
+            {
+              "id": "2056705455739881202",
+              "title": "H^Full^H H^Stack^H Consulting (H^React^H / Python / C#)",
+              "description": "We’re building a multi-service platform for project and operations management, combining workflows, data processing, and backend integrations across several services.\n\nWe’re looking for experienced H^full^H-H^stack^H consulting support to review architecture, improve system design, and guide key technical decisions.\n\nThis is not a small feature or bug-fixing job - we need engineers who can think at system level and help us stabilize and scale an existing production codebase.\n\nScope:\nArchitecture review & system design\nBackend consulting (Python: FastAPI / Django)\nFrontend improvements (H^React^H)\nC# services and integrations support\nAPI design, performance, and reliability improvements\nCode review and technical guidance\nTech H^stack^H:\n\nH^React^H, Python (FastAPI / Django), C# (.NET), PostgreSQL, Redis, Docker\n\nWhat we’re looking for:\nStrong system design and H^full^H-H^stack^H experience\nHands-on production background with complex systems\nAbility to work across multiple technologies\nPractical, high-signal engineering mindset\n\nIf you’ve built or scaled multi-service systems, we’d like to connect.",
+              "relevanceEncoded": "{\"position\":\"1\"}",
+              "ontologySkills": [
+                {
+                  "uid": "1031626795211276288",
+                  "parentSkillUid": null,
+                  "prefLabel": "Web Development",
+                  "prettyName": "Web Development",
+                  "freeText": null,
+                  "highlighted": true
+                },
+                {
+                  "uid": "1484275089215770624",
+                  "parentSkillUid": null,
+                  "prefLabel": "Full-Stack Development",
+                  "prettyName": "Full-Stack Development",
+                  "freeText": null,
+                  "highlighted": true
+                },
+                {
+                  "uid": "1031626773660942336",
+                  "parentSkillUid": null,
+                  "prefLabel": "React",
+                  "prettyName": "React",
+                  "freeText": null,
+                  "highlighted": true
+                },
+                {
+                  "uid": "1031626740031012864",
+                  "parentSkillUid": null,
+                  "prefLabel": "Front-End Development",
+                  "prettyName": "Front-End Development",
+                  "freeText": null,
+                  "highlighted": true
+                },
+                {
+                  "uid": "1484275089232547840",
+                  "parentSkillUid": null,
+                  "prefLabel": "Back-End Development",
+                  "prettyName": "Back-End Development",
+                  "freeText": null,
+                  "highlighted": true
+                },
+                {
+                  "uid": "996364628025274383",
+                  "parentSkillUid": null,
+                  "prefLabel": "JavaScript",
+                  "prettyName": "JavaScript",
+                  "freeText": null,
+                  "highlighted": false
+                },
+                {
+                  "uid": "996364628025274380",
+                  "parentSkillUid": null,
+                  "prefLabel": "C#",
+                  "prettyName": "C#",
+                  "freeText": null,
+                  "highlighted": false
+                },
+                {
+                  "uid": "1031626732825198592",
+                  "parentSkillUid": null,
+                  "prefLabel": ".NET Framework",
+                  "prettyName": ".NET Framework",
+                  "freeText": null,
+                  "highlighted": false
+                },
+                {
+                  "uid": "996364628025274386",
+                  "parentSkillUid": null,
+                  "prefLabel": "Python",
+                  "prettyName": "Python",
+                  "freeText": null,
+                  "highlighted": false
+                },
+                {
+                  "uid": "1110580482566246400",
+                  "parentSkillUid": null,
+                  "prefLabel": "API Integration",
+                  "prettyName": "API Integration",
+                  "freeText": null,
+                  "highlighted": false
+                }
+              ],
+              "isSTSVectorSearchResult": null,
+              "applied": false,
+              "upworkHistoryData": {
+                "client": {
+                  "paymentVerificationStatus": "VERIFIED",
+                  "country": "Latvia",
+                  "totalReviews": 43,
+                  "totalFeedback": 5,
+                  "hasFinancialPrivacy": false,
+                  "totalSpent": {
+                    "isoCurrencyCode": "USD",
+                    "amount": "21483.55"
+                  }
+                },
+                "freelancerClientRelation": {
+                  "lastContractRid": null,
+                  "companyName": null,
+                  "lastContractTitle": null
+                }
+              },
+              "jobTile": {
+                "job": {
+                  "id": "2056705455739881202",
+                  "ciphertext": "~022056705455739881202",
+                  "jobType": "HOURLY",
+                  "weeklyRetainerBudget": null,
+                  "hourlyBudgetMax": "50.0",
+                  "hourlyBudgetMin": "35.0",
+                  "hourlyEngagementType": "PART_TIME",
+                  "contractorTier": "ExpertLevel",
+                  "sourcingTimestamp": null,
+                  "createTime": "2026-05-19T11:56:07.489Z",
+                  "publishTime": "2026-05-19T11:57:01.612Z",
+                  "enterpriseJob": false,
+                  "personsToHire": 1,
+                  "premium": false,
+                  "totalApplicants": 170,
+                  "hourlyEngagementDuration": {
+                    "rid": 4,
+                    "label": "Less than 1 month",
+                    "weeks": 3,
+                    "mtime": "2014-06-04T17:59:10.123Z",
+                    "ctime": "2014-06-04T17:59:10.123Z"
+                  },
+                  "fixedPriceAmount": null,
+                  "fixedPriceEngagementDuration": null
+                }
+              }
+            },
+            {
+              "id": "2056687481955638735",
+              "title": "H^Full^H-H^Stack^H H^Developer^H for SaaS Platform",
+              "description": "I need an experienced H^full^H-H^stack^H H^developer^H to build and continuously improve a SaaS platform. You’ll own the entire H^stack^H - frontend, backend, database.\n\nIt will be a multi-tenant SaaS product where users sign up, manage their workspace, and perform core actions like (e.g., creating projects, processing payments, uploading files, viewing analytics). The MVP must be scalable, secure, and responsive on all devices.\n\nTechnical expectations:\n\nFrontend: H^React^H or Vue.H^js^H. \n\nBackend: Node.H^js^H (Express/NestH^JS^H), Python (Django or FastAPI).\n\nDatabase: PostgreSQL or MongoDB.",
+              "relevanceEncoded": "{\"position\":\"2\"}",
+              "ontologySkills": [
+                {
+                  "uid": "1031626773660942336",
+                  "parentSkillUid": null,
+                  "prefLabel": "React",
+                  "prettyName": "React",
+                  "freeText": null,
+                  "highlighted": true
+                },
+                {
+                  "uid": "1031626794477273088",
+                  "parentSkillUid": null,
+                  "prefLabel": "Vue.js",
+                  "prettyName": "Vue.js",
+                  "freeText": null,
+                  "highlighted": true
+                },
+                {
+                  "uid": "1031626762999021568",
+                  "parentSkillUid": null,
+                  "prefLabel": "Node.js",
+                  "prettyName": "Node.js",
+                  "freeText": null,
+                  "highlighted": true
+                },
+                {
+                  "uid": "996364628025274386",
+                  "parentSkillUid": null,
+                  "prefLabel": "Python",
+                  "prettyName": "Python",
+                  "freeText": null,
+                  "highlighted": false
+                }
+              ],
+              "isSTSVectorSearchResult": null,
+              "applied": false,
+              "upworkHistoryData": {
+                "client": {
+                  "paymentVerificationStatus": "VERIFIED",
+                  "country": "Kazakhstan",
+                  "totalReviews": 0,
+                  "totalFeedback": 0,
+                  "hasFinancialPrivacy": false,
+                  "totalSpent": {
+                    "isoCurrencyCode": "USD",
+                    "amount": "0.0"
+                  }
+                },
+                "freelancerClientRelation": {
+                  "lastContractRid": null,
+                  "companyName": null,
+                  "lastContractTitle": null
+                }
+              },
+              "jobTile": {
+                "job": {
+                  "id": "2056687481955638735",
+                  "ciphertext": "~022056687481955638735",
+                  "jobType": "HOURLY",
+                  "weeklyRetainerBudget": null,
+                  "hourlyBudgetMax": "47.0",
+                  "hourlyBudgetMin": "25.0",
+                  "hourlyEngagementType": "FULL_TIME",
+                  "contractorTier": "ExpertLevel",
+                  "sourcingTimestamp": null,
+                  "createTime": "2026-05-19T10:44:42.163Z",
+                  "publishTime": "2026-05-19T10:46:42.750Z",
+                  "enterpriseJob": false,
+                  "personsToHire": 1,
+                  "premium": false,
+                  "totalApplicants": 91,
+                  "hourlyEngagementDuration": {
+                    "rid": 2,
+                    "label": "3 to 6 months",
+                    "weeks": 18,
+                    "mtime": "2014-06-04T17:59:10.123Z",
+                    "ctime": "2014-06-04T17:59:10.123Z"
+                  },
+                  "fixedPriceAmount": null,
+                  "fixedPriceEngagementDuration": null
+                }
+              }
+            },
+            {
+              "id": "2056775099320750974",
+              "title": "H^Full^H H^Stack^H Front End H^developer^H with AI knowledge for quick deployment.",
+              "description": "H^React^H/Next.H^js^H H^Developer^H with Server-Side rendering experience\nand good CSS skills, with the use of AI assistants\nWork on a complex Next.H^js^H application that is used as a web platform, but also as a\nmobile application (Capacitor), with the integration of advanced monitoring tools\n(Sentry), environment management and resource optimization (CDN, SVG-in-H^JS^H).\nTechnical specification of knowledge and skills that a Frontend H^Developer^H must possess\nto work on the  project:\nMain Frontend Technologies (H^React^H Ecosystem)\n Legacy H^React^H architecture:\nExcellent knowledge of H^React^H 16 or higher.\n- Understanding the differences between class and functional components.\n- Working with the Hooks API.\n State Management:\nAdvanced knowledge of Redux and H^React^H-Redux.\n Routing:\nManage in-app routes using H^React^H Router v5 or higher (H^react^H-router-dom).\n- Work with dynamic routes, query parameters via query-string and H^react^H-url-query.\n Forms and validation:\nCreating complex forms through Formik and defining data validation rules using\nthe Yup library.\n Styling:\nWorking with Sass/SCSS preprocessors and Styled-Components for a CSS-in-\nH^JS^H approach.\n- Styling components through Bootstrap 4 and Reactstrap.\n HTTP client:\nSending API requests, handling interceptors and error handling through the\nAxios library.\nUsing AI tools for rapid coding (AI-Driven H^Development^H)\n AI assistants:\nEffective use of tools such as \"GitHub Copilot Workspace\" (an AI assistant that\nis integrated into JetBrains (WebStorm)), or similar.\n1\n Prompt Engineering for H^Developers^H:\nWriting precise instructions for generating code, refactoring, and writing tests.\n AI code Validation:\nAbility to critically review, understand and correct code generated by AI (AI often\nfails with older libraries like H^React^H 16 and H^React^H Router 5).\n Acceleration of H^Development^H:\nUsing AI to quickly generate Bootstrap layouts, write Regex expressions,\ntransform complex objects through Lodash, and write repetitive Redux code.\nDocker and local environment\n Starting the container:\nUsing basic commands.\n Local H^development^H:\nUnderstanding how Docker maps local files (volumes) so that code changes are\nimmediately visible in the browser.\n Debugging:\nAbility to read logs inside a Docker container when the application is not running.\nGitLab and CI/CD processes\n Git GitLab Workflow:\nWorking with branches (feature branching), creating a Merge Request (MR),\nsolving conflicts in the code.\n CI/CD Pipeline:\nUnderstanding how GitLab CI/CD automatically runs scripts defined in a project.\nCode Quality Tools (Linting & Formatting)\n Code quality:\nKnowledge of the workings and rules of ESLint and Prettier.\n Scripts:\nRegularly running built-in checks before submitting code to GitLab.\nSpecific integrations on the project\n Payment:\nImplementation and maintenance of card payment forms.\n Security and analytics:\nUnderstanding bot and fraud detection systems via @fingerprintjs/fingerprintjs.\n2\n Asset Management:\nAdvanced work with SVG icons (SVGR) and image optimization.\n UI components:\nWorking with advanced UI libraries included in the project: graphics (Recharts),\nscrolling (Smooth-Scrollbar), animations (H^React^H-Spring), sliders (H^React^H-Slick), and\ncustom selectors (H^React^H-Select).\n Mobile integration:\nImplementing authentication and functionality within the Capacitor environment.\nPreferably\n Multitasking\n SEO\n AWS\n Adobe Photoshop\n Microsoft Office\n Google Analytics\n PHP\n Linux\n iOS/Android app\n+  Experience with animations and effects would also be required.\n Everything should feel smooth and polished.\n We expect code with cross-browser support (Safari/Chrome/Edge/Firefox).\nthe project  is served by AWS CloudFront and API Gateway.\nWe need a link to your latest site built on the H^React^H/Next.H^js^H H^stack^H.  TO MAKE SURE YOU READ THIS TYPE BATMAN IN APPLICATION TITLE",
+              "relevanceEncoded": "{\"position\":\"3\"}",
+              "ontologySkills": [
+                {
+                  "uid": "1691099314241679360",
+                  "parentSkillUid": null,
+                  "prefLabel": "AI App Development",
+                  "prettyName": "AI App Development",
+                  "freeText": null,
+                  "highlighted": true
+                },
+                {
+                  "uid": "1484275089215770624",
+                  "parentSkillUid": null,
+                  "prefLabel": "Full-Stack Development",
+                  "prettyName": "Full-Stack Development",
+                  "freeText": null,
+                  "highlighted": true
+                },
+                {
+                  "uid": "1031626773660942336",
+                  "parentSkillUid": null,
+                  "prefLabel": "React",
+                  "prettyName": "React",
+                  "freeText": null,
+                  "highlighted": true
+                },
+                {
+                  "uid": "1110580737240190976",
+                  "parentSkillUid": null,
+                  "prefLabel": "Web Application",
+                  "prettyName": "Web Application",
+                  "freeText": null,
+                  "highlighted": false
+                },
+                {
+                  "uid": "1031626781403627520",
+                  "parentSkillUid": null,
+                  "prefLabel": "Software Debugging",
+                  "prettyName": "Software Debugging",
+                  "freeText": null,
+                  "highlighted": false
+                },
+                {
+                  "uid": "1204836482932654080",
+                  "parentSkillUid": null,
+                  "prefLabel": "Website Optimization",
+                  "prettyName": "Website Optimization",
+                  "freeText": null,
+                  "highlighted": false
+                },
+                {
+                  "uid": "1031626711912398848",
+                  "parentSkillUid": null,
+                  "prefLabel": "Amazon EC2",
+                  "prettyName": "Amazon EC2",
+                  "freeText": null,
+                  "highlighted": false
+                },
+                {
+                  "uid": "996364628025274385",
+                  "parentSkillUid": null,
+                  "prefLabel": "PHP",
+                  "prettyName": "PHP",
+                  "freeText": null,
+                  "highlighted": false
+                },
+                {
+                  "uid": "996364628025274383",
+                  "parentSkillUid": null,
+                  "prefLabel": "JavaScript",
+                  "prettyName": "JavaScript",
+                  "freeText": null,
+                  "highlighted": false
+                },
+                {
+                  "uid": "1031626728794472448",
+                  "parentSkillUid": null,
+                  "prefLabel": "CSS",
+                  "prettyName": "CSS",
+                  "freeText": null,
+                  "highlighted": false
+                }
+              ],
+              "isSTSVectorSearchResult": null,
+              "applied": false,
+              "upworkHistoryData": {
+                "client": {
+                  "paymentVerificationStatus": "VERIFIED",
+                  "country": "United States",
+                  "totalReviews": 41,
+                  "totalFeedback": 4.95,
+                  "hasFinancialPrivacy": false,
+                  "totalSpent": {
+                    "isoCurrencyCode": "USD",
+                    "amount": "1340661.99"
+                  }
+                },
+                "freelancerClientRelation": {
+                  "lastContractRid": null,
+                  "companyName": null,
+                  "lastContractTitle": null
+                }
+              },
+              "jobTile": {
+                "job": {
+                  "id": "2056775099320750974",
+                  "ciphertext": "~022056775099320750974",
+                  "jobType": "HOURLY",
+                  "weeklyRetainerBudget": null,
+                  "hourlyBudgetMax": "47.0",
+                  "hourlyBudgetMin": "35.0",
+                  "hourlyEngagementType": "PART_TIME",
+                  "contractorTier": "ExpertLevel",
+                  "sourcingTimestamp": null,
+                  "createTime": "2026-05-19T16:32:51.786Z",
+                  "publishTime": "2026-05-19T16:32:52.429Z",
+                  "enterpriseJob": false,
+                  "personsToHire": 1,
+                  "premium": false,
+                  "totalApplicants": 160,
+                  "hourlyEngagementDuration": {
+                    "rid": 2,
+                    "label": "3 to 6 months",
+                    "weeks": 18,
+                    "mtime": "2014-06-04T17:59:10.123Z",
+                    "ctime": "2014-06-04T17:59:10.123Z"
+                  },
+                  "fixedPriceAmount": null,
+                  "fixedPriceEngagementDuration": null
+                }
+              }
+            },
+            {
+              "id": "2056446730580523341",
+              "title": "Senior H^Full^H-H^Stack^H AI engineer",
+              "description": "We are a fast-growing, agile startup looking for a high-caliber Senior H^Full^H-H^Stack^H AI Engineer to join our team immediately. You will own the architecture and implementation of our core platform, bridging the gap between high-performance user interfaces and complex AI/ML backend workflows.\n\nIf you thrive in fast-paced startup environments, love building \"AI-native\" applications, and take extreme pride in clean, production-grade code, we want to talk to you today.\n\nKey Responsibilities:\nArchitecture & H^Development^H: Architect, build, and maintain scalable, high-performance web applications using Next.H^js^H (App Router) and Node.H^js^H.\n\nAI/ML Integration: Integrate and optimize LLMs (OpenAI, Anthropic, open-source models) using frameworks like LangChain, LlamaIndex, or Vercel AI SDK.\n\nData & Infrastructure: Design robust data models and migrations using PostgreSQL/Supabase and vector databases (Pinecone, pgvector) for RAG applications.\n\nRequired Technical H^Stack^H & Keywords:\n\nFrontend: H^React^H, Next.H^js^H (App Router), TypeScript, Tailwind CSS, Shadcn/ui\n\nBackend & APIs: Node.H^js^H, Express, RESTful APIs, WebSockets, Serverless Functions\n\nAI/ML: LLM APIs (GPT-4, Claude), Prompt Engineering, RAG (Retrieval-Augmented Generation), LangChain, Vector Embeddings\n\nDatabase & Cloud: Supabase, PostgreSQL, Vector DBs (Pinecone/pgvector), AWS (S3, EC2, Lambda)\n\nDevOps & Tools: Git, GitHub Actions, CI/CD pipelines, Vercel\n\n\nQualifications:\n\nExperience: 7+ years of professional software engineering experience, with a proven track record in a startup or fast-paced technical environment.\n\nCommunication: Native or completely fluent English speaker with exceptional communication skills.\n\nMindset: Self-starter who can navigate ambiguity, make pragmatic architectural trade-offs, and deliver high-quality code under tight deadlines.\n\nDo NOT send a generic, AI-generated proposal. It will be automatically rejected.",
+              "relevanceEncoded": "{\"position\":\"4\"}",
+              "ontologySkills": [
+                {
+                  "uid": "1031626762688643072",
+                  "parentSkillUid": null,
+                  "prefLabel": "Next.js",
+                  "prettyName": "Next.js",
+                  "freeText": null,
+                  "highlighted": true
+                },
+                {
+                  "uid": "1031626762999021568",
+                  "parentSkillUid": null,
+                  "prefLabel": "Node.js",
+                  "prettyName": "Node.js",
+                  "freeText": null,
+                  "highlighted": true
+                },
+                {
+                  "uid": "1031626755474440192",
+                  "parentSkillUid": null,
+                  "prefLabel": "Machine Learning",
+                  "prettyName": "Machine Learning",
+                  "freeText": null,
+                  "highlighted": false
+                },
+                {
+                  "uid": "1031626716094119936",
+                  "parentSkillUid": null,
+                  "prefLabel": "Artificial Intelligence",
+                  "prettyName": "Artificial Intelligence",
+                  "freeText": null,
+                  "highlighted": false
+                },
+                {
+                  "uid": "996364628012691471",
+                  "parentSkillUid": null,
+                  "prefLabel": "Amazon Web Services",
+                  "prettyName": "Amazon Web Services",
+                  "freeText": null,
+                  "highlighted": false
+                }
+              ],
+              "isSTSVectorSearchResult": null,
+              "applied": false,
+              "upworkHistoryData": {
+                "client": {
+                  "paymentVerificationStatus": "VERIFIED",
+                  "country": "GBR",
+                  "totalReviews": 2,
+                  "totalFeedback": 5,
+                  "hasFinancialPrivacy": false,
+                  "totalSpent": {
+                    "isoCurrencyCode": "USD",
+                    "amount": "1100.0"
+                  }
+                },
+                "freelancerClientRelation": {
+                  "lastContractRid": null,
+                  "companyName": null,
+                  "lastContractTitle": null
+                }
+              },
+              "jobTile": {
+                "job": {
+                  "id": "2056446730580523341",
+                  "ciphertext": "~022056446730580523341",
+                  "jobType": "FIXED",
+                  "weeklyRetainerBudget": null,
+                  "hourlyBudgetMax": null,
+                  "hourlyBudgetMin": null,
+                  "hourlyEngagementType": null,
+                  "contractorTier": "ExpertLevel",
+                  "sourcingTimestamp": null,
+                  "createTime": "2026-05-18T18:48:02.564Z",
+                  "publishTime": "2026-05-18T18:51:17.713Z",
+                  "enterpriseJob": false,
+                  "personsToHire": 1,
+                  "premium": false,
+                  "totalApplicants": 53,
+                  "hourlyEngagementDuration": null,
+                  "fixedPriceAmount": {
+                    "isoCurrencyCode": null,
+                    "amount": "600.0"
+                  },
+                  "fixedPriceEngagementDuration": {
+                    "id": "474250516458926081",
+                    "rid": 2,
+                    "label": "3 to 6 months",
+                    "weeks": 18,
+                    "ctime": "2014-06-04T17:59:10.123Z",
+                    "mtime": "2014-06-04T17:59:10.123Z"
+                  }
+                }
+              }
+            },
+            {
+              "id": "2056997692725441906",
+              "title": "H^Full^H-H^Stack^H H^React^H/Node.H^js^H H^Developer^H - SEO & Feature Optimization",
+              "description": "I am looking for an experienced H^Full^H-H^stack^H H^Developer^H to help me finalize and optimize some key features on my language learning platform. The project is a dictionary and grammar learning site built with H^React.js^H and Node.H^js^H.\nKey Tasks:\nSEO Optimization: Audit and fix SEO-related issues to improve search engine visibility for dynamic pages (dictionary and grammar lessons).\nVideo Integration: Link and embed video content into specific grammar lessons in a clean, responsive layout.\nAbout Page Update: Refresh the design and content of the \"About Us\" page according to the provided requirements.\nSearch Logic Improvements: Fine-tune the dictionary search functionality to improve user experience and accuracy.\nRequirements:\nStrong proficiency in H^React.js^H and Node.H^js^H.\nExperience with SEO best practices for SPA (Single Page Applications).\nAbility to write clean, maintainable code.\nEnglish level: Intermediate or higher (to understand requirements clearly).",
+              "relevanceEncoded": "{\"position\":\"5\"}",
+              "ontologySkills": [
+                {
+                  "uid": "1031626773660942336",
+                  "parentSkillUid": null,
+                  "prefLabel": "React",
+                  "prettyName": "React",
+                  "freeText": null,
+                  "highlighted": true
+                },
+                {
+                  "uid": "1031626762999021568",
+                  "parentSkillUid": null,
+                  "prefLabel": "Node.js",
+                  "prettyName": "Node.js",
+                  "freeText": null,
+                  "highlighted": true
+                },
+                {
+                  "uid": "1031626795211276288",
+                  "parentSkillUid": null,
+                  "prefLabel": "Web Development",
+                  "prettyName": "Web Development",
+                  "freeText": null,
+                  "highlighted": true
+                },
+                {
+                  "uid": "996364628025274383",
+                  "parentSkillUid": null,
+                  "prefLabel": "JavaScript",
+                  "prettyName": "JavaScript",
+                  "freeText": null,
+                  "highlighted": false
+                }
+              ],
+              "isSTSVectorSearchResult": null,
+              "applied": false,
+              "upworkHistoryData": {
+                "client": {
+                  "paymentVerificationStatus": null,
+                  "country": "Uzbekistan",
+                  "totalReviews": 0,
+                  "totalFeedback": 0,
+                  "hasFinancialPrivacy": false,
+                  "totalSpent": {
+                    "isoCurrencyCode": "USD",
+                    "amount": "0.0"
+                  }
+                },
+                "freelancerClientRelation": {
+                  "lastContractRid": null,
+                  "companyName": null,
+                  "lastContractTitle": null
+                }
+              },
+              "jobTile": {
+                "job": {
+                  "id": "2056997692725441906",
+                  "ciphertext": "~022056997692725441906",
+                  "jobType": "FIXED",
+                  "weeklyRetainerBudget": null,
+                  "hourlyBudgetMax": null,
+                  "hourlyBudgetMin": null,
+                  "hourlyEngagementType": null,
+                  "contractorTier": "IntermediateLevel",
+                  "sourcingTimestamp": null,
+                  "createTime": "2026-05-20T07:17:22.075Z",
+                  "publishTime": "2026-05-20T07:19:25.799Z",
+                  "enterpriseJob": false,
+                  "personsToHire": 1,
+                  "premium": false,
+                  "totalApplicants": 13,
+                  "hourlyEngagementDuration": null,
+                  "fixedPriceAmount": {
+                    "isoCurrencyCode": null,
+                    "amount": "100.0"
+                  },
+                  "fixedPriceEngagementDuration": {
+                    "id": "474250516458926082",
+                    "rid": 3,
+                    "label": "1 to 3 months",
+                    "weeks": 9,
+                    "ctime": "2014-06-04T17:59:10.123Z",
+                    "mtime": "2014-06-04T17:59:10.123Z"
+                  }
+                }
+              }
+            },
+            {
+              "id": "2056402765529100234",
+              "title": "H^Full^H H^Stack^H H^Developer^H",
+              "description": "Job Description:\nWe are looking for a motivated and skilled H^Full^H H^Stack^H H^Developer^H to join our software H^development^H team. The candidate should be able to work on both front-end and back-end H^development^H. You will be responsible for building, maintaining, and improving web applications.\n\nResponsibilities:\n\nH^Develop^H and maintain web applications\nWork on front-end and back-end tasks\nWrite clean and efficient code\nFix bugs and improve application performance\nCollaborate with team members and clients\nIntegrate APIs and databases\n\nRequirements:\n\nBasic knowledge of HTML, CSS, JavaScript\nExperience with H^React^H, Node.H^js^H, or similar technologies\nUnderstanding of databases like MySQL or MongoDB\nProblem-solving skills\nTeamwork and communication skills\n\nExperience:\nFresh to 2 Years Experience",
+              "relevanceEncoded": "{\"position\":\"6\"}",
+              "ontologySkills": [
+                {
+                  "uid": "1031626762999021568",
+                  "parentSkillUid": null,
+                  "prefLabel": "Node.js",
+                  "prettyName": "Node.js",
+                  "freeText": null,
+                  "highlighted": true
+                },
+                {
+                  "uid": "1031626773660942336",
+                  "parentSkillUid": null,
+                  "prefLabel": "React",
+                  "prettyName": "React",
+                  "freeText": null,
+                  "highlighted": true
+                },
+                {
+                  "uid": "1204836443502002176",
+                  "parentSkillUid": null,
+                  "prefLabel": "App Development",
+                  "prettyName": "App Development",
+                  "freeText": null,
+                  "highlighted": true
+                },
+                {
+                  "uid": "996364628025274383",
+                  "parentSkillUid": null,
+                  "prefLabel": "JavaScript",
+                  "prettyName": "JavaScript",
+                  "freeText": null,
+                  "highlighted": false
+                },
+                {
+                  "uid": "1110580482322976768",
+                  "parentSkillUid": null,
+                  "prefLabel": "API",
+                  "prettyName": "API",
+                  "freeText": null,
+                  "highlighted": false
+                },
+                {
+                  "uid": "1110580482566246400",
+                  "parentSkillUid": null,
+                  "prefLabel": "API Integration",
+                  "prettyName": "API Integration",
+                  "freeText": null,
+                  "highlighted": false
+                },
+                {
+                  "uid": "1110580737240190976",
+                  "parentSkillUid": null,
+                  "prefLabel": "Web Application",
+                  "prettyName": "Web Application",
+                  "freeText": null,
+                  "highlighted": false
+                },
+                {
+                  "uid": "1031626708611481600",
+                  "parentSkillUid": null,
+                  "prefLabel": "Across Language Server",
+                  "prettyName": "Across Language Server",
+                  "freeText": null,
+                  "highlighted": false
+                },
+                {
+                  "uid": "1031626712877088768",
+                  "parentSkillUid": null,
+                  "prefLabel": "AngularJS",
+                  "prettyName": "AngularJS",
+                  "freeText": null,
+                  "highlighted": false
+                }
+              ],
+              "isSTSVectorSearchResult": null,
+              "applied": false,
+              "upworkHistoryData": {
+                "client": {
+                  "paymentVerificationStatus": null,
+                  "country": "Pakistan",
+                  "totalReviews": 0,
+                  "totalFeedback": 0,
+                  "hasFinancialPrivacy": false,
+                  "totalSpent": {
+                    "isoCurrencyCode": "USD",
+                    "amount": "0.0"
+                  }
+                },
+                "freelancerClientRelation": {
+                  "lastContractRid": null,
+                  "companyName": null,
+                  "lastContractTitle": null
+                }
+              },
+              "jobTile": {
+                "job": {
+                  "id": "2056402765529100234",
+                  "ciphertext": "~022056402765529100234",
+                  "jobType": "HOURLY",
+                  "weeklyRetainerBudget": null,
+                  "hourlyBudgetMax": "35.0",
+                  "hourlyBudgetMin": "15.0",
+                  "hourlyEngagementType": "PART_TIME",
+                  "contractorTier": "IntermediateLevel",
+                  "sourcingTimestamp": null,
+                  "createTime": "2026-05-18T15:53:20.471Z",
+                  "publishTime": "2026-05-18T15:55:15.904Z",
+                  "enterpriseJob": false,
+                  "personsToHire": 1,
+                  "premium": false,
+                  "totalApplicants": 31,
+                  "hourlyEngagementDuration": {
+                    "rid": 1,
+                    "label": "More than 6 months",
+                    "weeks": 52,
+                    "mtime": "2014-06-04T17:59:10.123Z",
+                    "ctime": "2014-06-04T17:59:10.123Z"
+                  },
+                  "fixedPriceAmount": null,
+                  "fixedPriceEngagementDuration": null
+                }
+              }
+            },
+            {
+              "id": "2056364752508095743",
+              "title": "H^Full^H-H^Stack^H Engineer (Both Male & Female H^Developers^H)",
+              "description": "(Need 2 H^Developers^H - Male and Female H^Developers^H)\nGoodieX Tech is a growing digital solutions agency serving clients across the United States, Europe and the Americas. We build websites, software systems, automation tools and business solutions for startups, small businesses and established companies.\n\nWe are hiring a versatile remote professional who can contribute across software H^development^H, technical customer support, operations, client communication, administration and project coordination. This role is ideal for someone proactive, organized, dependable and comfortable handling multiple responsibilities in a fast-paced environment.\n\n-Responsibilities\nBuild, maintain and improve web applications and internal tools\nProvide technical support and guidance to customers\nTroubleshoot software issues and coordinate resolutions\nCommunicate with clients and provide project updates\nManage schedules, emails and administrative tasks\nSupport internal operations, onboarding and workflow improvements\nPerform research, reporting and data management\n-Required Skills\nStrong English communication\nH^Full^H-H^stack^H H^development^H experience\nProblem-solving mindset\nExcellent organization and time management\nAttention to detail\nAbility to multitask in a remote environment\nProfessional attitude and reliability\n-Preferred Skills\nExperience with one or more of the following is a plus: H^React^H, Node.H^js^H, TypeScript, Python, WordPress, Shopify, CRM tools, customer support systems, AWS, Trello, ClickUp, Asana, Canva or Figma.\n-Experience Level: Open to all levels. Training can be provided for the right candidate.\n-Pay: $30 - $60 USD per hour (based on experience)\n-Job Type: Hourly Contract\n-Duration: Long-term / Ongoing Opportunity\n-Location: United States, Canada, Europe or Latin America\n-How to Apply:\nPlease send your resume, your experience, short video introduction and weekly availability.\n\nGoodieX Tech HR Team,\nAlexus.",
+              "relevanceEncoded": "{\"position\":\"7\"}",
+              "ontologySkills": [
+                {
+                  "uid": "1031626795211276288",
+                  "parentSkillUid": null,
+                  "prefLabel": "Web Development",
+                  "prettyName": "Web Development",
+                  "freeText": null,
+                  "highlighted": true
+                },
+                {
+                  "uid": "1031626773660942336",
+                  "parentSkillUid": null,
+                  "prefLabel": "React",
+                  "prettyName": "React",
+                  "freeText": null,
+                  "highlighted": true
+                },
+                {
+                  "uid": "996364628025274386",
+                  "parentSkillUid": null,
+                  "prefLabel": "Python",
+                  "prettyName": "Python",
+                  "freeText": null,
+                  "highlighted": false
+                }
+              ],
+              "isSTSVectorSearchResult": null,
+              "applied": false,
+              "upworkHistoryData": {
+                "client": {
+                  "paymentVerificationStatus": "VERIFIED",
+                  "country": "United States",
+                  "totalReviews": 0,
+                  "totalFeedback": 0,
+                  "hasFinancialPrivacy": false,
+                  "totalSpent": {
+                    "isoCurrencyCode": "USD",
+                    "amount": "0.0"
+                  }
+                },
+                "freelancerClientRelation": {
+                  "lastContractRid": null,
+                  "companyName": null,
+                  "lastContractTitle": null
+                }
+              },
+              "jobTile": {
+                "job": {
+                  "id": "2056364752508095743",
+                  "ciphertext": "~022056364752508095743",
+                  "jobType": "HOURLY",
+                  "weeklyRetainerBudget": null,
+                  "hourlyBudgetMax": "60.0",
+                  "hourlyBudgetMin": "30.0",
+                  "hourlyEngagementType": "FULL_TIME",
+                  "contractorTier": "IntermediateLevel",
+                  "sourcingTimestamp": "2026-05-20T12:12:19.902Z",
+                  "createTime": "2026-05-18T13:22:17.449Z",
+                  "publishTime": "2026-05-18T16:24:02.750Z",
+                  "enterpriseJob": false,
+                  "personsToHire": 1,
+                  "premium": true,
+                  "totalApplicants": 52,
+                  "hourlyEngagementDuration": {
+                    "rid": 1,
+                    "label": "More than 6 months",
+                    "weeks": 52,
+                    "mtime": "2014-06-04T17:59:10.123Z",
+                    "ctime": "2014-06-04T17:59:10.123Z"
+                  },
+                  "fixedPriceAmount": null,
+                  "fixedPriceEngagementDuration": null
+                }
+              }
+            },
+            {
+              "id": "2056736457435644654",
+              "title": "H^React.js^H/Node.H^js^H H^Developer^H for Bug Fixes",
+              "description": "We are seeking a skilled H^React.js^H and Node.H^js^H H^developer^H to address bug fixes and implement minor enhancements. The ideal candidate will have experience in problem-solving and be able to work independently to resolve issues efficiently. Familiarity with MongoDB and JavaScript is a plus. This is a part-time engagement with a short-term project duration.",
+              "relevanceEncoded": "{\"position\":\"8\"}",
+              "ontologySkills": [
+                {
+                  "uid": "1031626762999021568",
+                  "parentSkillUid": null,
+                  "prefLabel": "Node.js",
+                  "prettyName": "Node.js",
+                  "freeText": null,
+                  "highlighted": true
+                },
+                {
+                  "uid": "996364628025274383",
+                  "parentSkillUid": null,
+                  "prefLabel": "JavaScript",
+                  "prettyName": "JavaScript",
+                  "freeText": null,
+                  "highlighted": false
+                },
+                {
+                  "uid": "996364627995914245",
+                  "parentSkillUid": null,
+                  "prefLabel": "MongoDB",
+                  "prettyName": "MongoDB",
+                  "freeText": null,
+                  "highlighted": false
+                },
+                {
+                  "uid": "1031626712877088768",
+                  "parentSkillUid": null,
+                  "prefLabel": "AngularJS",
+                  "prettyName": "AngularJS",
+                  "freeText": null,
+                  "highlighted": false
+                }
+              ],
+              "isSTSVectorSearchResult": null,
+              "applied": false,
+              "upworkHistoryData": {
+                "client": {
+                  "paymentVerificationStatus": "VERIFIED",
+                  "country": "USA",
+                  "totalReviews": 0,
+                  "totalFeedback": 0,
+                  "hasFinancialPrivacy": false,
+                  "totalSpent": {
+                    "isoCurrencyCode": "USD",
+                    "amount": "0.0"
+                  }
+                },
+                "freelancerClientRelation": {
+                  "lastContractRid": null,
+                  "companyName": null,
+                  "lastContractTitle": null
+                }
+              },
+              "jobTile": {
+                "job": {
+                  "id": "2056736457435644654",
+                  "ciphertext": "~022056736457435644654",
+                  "jobType": "FIXED",
+                  "weeklyRetainerBudget": null,
+                  "hourlyBudgetMax": null,
+                  "hourlyBudgetMin": null,
+                  "hourlyEngagementType": null,
+                  "contractorTier": "IntermediateLevel",
+                  "sourcingTimestamp": null,
+                  "createTime": "2026-05-19T13:59:18.820Z",
+                  "publishTime": "2026-05-19T14:01:35.194Z",
+                  "enterpriseJob": false,
+                  "personsToHire": 1,
+                  "premium": false,
+                  "totalApplicants": 45,
+                  "hourlyEngagementDuration": null,
+                  "fixedPriceAmount": {
+                    "isoCurrencyCode": null,
+                    "amount": "200.0"
+                  },
+                  "fixedPriceEngagementDuration": {
+                    "id": "474250516458926083",
+                    "rid": 4,
+                    "label": "Less than 1 month",
+                    "weeks": 3,
+                    "ctime": "2014-06-04T17:59:10.123Z",
+                    "mtime": "2014-06-04T17:59:10.123Z"
+                  }
+                }
+              }
+            },
+            {
+              "id": "2056565051380084682",
+              "title": "H^Full^H-H^Stack^H H^Developer^H — H^React^H / Node.H^js^H / Supabase (SaaS Product)",
+              "description": "About the project\nOperra is a SaaS platform built for independent restaurants in the US and UK. It handles operations, subscriptions, and AI-powered features. The app is live at operraapp.com and built with H^React^H, Vite, Node.H^js^H, Express, Supabase, and Stripe.\nI need a H^developer^H who can jump into an existing codebase, understand it quickly, and ship reliable features without hand-holding.\nWhat you'll work on\n\nNew feature H^development^H across the frontend and backend\nBug fixes and performance improvements\nSupabase database work — schema changes, RLS policies, Edge Functions\nStripe billing logic — trials, upgrades, webhooks\nAPI integrations with POS systems and third-party services\nSuper Admin panel improvements\n\nYou must have experience with\n\nH^React^H and JavaScript (no TypeScript required)\nNode.H^js^H and Express\nSupabase (Auth, database, Edge Functions)\nStripe API\nGit and GitHub\nVercel deployments\n\nNice to have\n\nPrior work on a SaaS product\nExperience with multi-tenant architecture\nFamiliarity with restaurant tech or hospitality software\n\nHow we'll work\n\nAsync-first, clear task briefs for each feature\nDeployed to Vercel — changes go live fast\nGitHub for all code, PRs reviewed before merge\nFixed-price per feature or hourly depending on scope\n\nTo apply, include:\n\nA link to one project you built or contributed to\nOne sentence on your Supabase experience specifically\nYour hourly rate or rough fixed-price estimate for small features",
+              "relevanceEncoded": "{\"position\":\"9\"}",
+              "ontologySkills": [
+                {
+                  "uid": "1031626762999021568",
+                  "parentSkillUid": null,
+                  "prefLabel": "Node.js",
+                  "prettyName": "Node.js",
+                  "freeText": null,
+                  "highlighted": true
+                },
+                {
+                  "uid": "1031626773660942336",
+                  "parentSkillUid": null,
+                  "prefLabel": "React",
+                  "prettyName": "React",
+                  "freeText": null,
+                  "highlighted": true
+                },
+                {
+                  "uid": "1031626795211276288",
+                  "parentSkillUid": null,
+                  "prefLabel": "Web Development",
+                  "prettyName": "Web Development",
+                  "freeText": null,
+                  "highlighted": true
+                },
+                {
+                  "uid": "1110580482566246400",
+                  "parentSkillUid": null,
+                  "prefLabel": "API Integration",
+                  "prettyName": "API Integration",
+                  "freeText": null,
+                  "highlighted": false
+                },
+                {
+                  "uid": "1110580737240190976",
+                  "parentSkillUid": null,
+                  "prefLabel": "Web Application",
+                  "prettyName": "Web Application",
+                  "freeText": null,
+                  "highlighted": false
+                },
+                {
+                  "uid": "1110580482322976768",
+                  "parentSkillUid": null,
+                  "prefLabel": "API",
+                  "prettyName": "API",
+                  "freeText": null,
+                  "highlighted": false
+                }
+              ],
+              "isSTSVectorSearchResult": null,
+              "applied": false,
+              "upworkHistoryData": {
+                "client": {
+                  "paymentVerificationStatus": null,
+                  "country": "United States",
+                  "totalReviews": 0,
+                  "totalFeedback": 0,
+                  "hasFinancialPrivacy": false,
+                  "totalSpent": {
+                    "isoCurrencyCode": "USD",
+                    "amount": "0.0"
+                  }
+                },
+                "freelancerClientRelation": {
+                  "lastContractRid": null,
+                  "companyName": null,
+                  "lastContractTitle": null
+                }
+              },
+              "jobTile": {
+                "job": {
+                  "id": "2056565051380084682",
+                  "ciphertext": "~022056565051380084682",
+                  "jobType": "HOURLY",
+                  "weeklyRetainerBudget": null,
+                  "hourlyBudgetMax": null,
+                  "hourlyBudgetMin": null,
+                  "hourlyEngagementType": "NOT_SURE",
+                  "contractorTier": "ExpertLevel",
+                  "sourcingTimestamp": null,
+                  "createTime": "2026-05-19T02:38:12.300Z",
+                  "publishTime": "2026-05-19T02:41:12.449Z",
+                  "enterpriseJob": false,
+                  "personsToHire": 1,
+                  "premium": false,
+                  "totalApplicants": 61,
+                  "hourlyEngagementDuration": {
+                    "rid": 3,
+                    "label": "1 to 3 months",
+                    "weeks": 9,
+                    "mtime": "2014-06-04T17:59:10.123Z",
+                    "ctime": "2014-06-04T17:59:10.123Z"
+                  },
+                  "fixedPriceAmount": null,
+                  "fixedPriceEngagementDuration": null
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

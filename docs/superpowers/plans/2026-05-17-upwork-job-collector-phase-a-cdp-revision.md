@@ -22,7 +22,7 @@
 
 **Files:** Modify: `src/types.ts`
 
-- [ ] **Step 1: 修改 `Config` 接口** — 把 `browser: { headless: boolean }` 替换为 `chrome` 段,并从 `paths` 删除 `storageState`。最终 `Config` 为:
+- [x] **Step 1: 修改 `Config` 接口** — 把 `browser: { headless: boolean }` 替换为 `chrome` 段,并从 `paths` 删除 `storageState`。最终 `Config` 为:
 
 ```typescript
 export interface Config {
@@ -51,8 +51,8 @@ export interface Config {
 
 其余类型(`Job` / `StoredJob` / `Run` / `CategoryFilter` 等)不变。
 
-- [ ] **Step 2: 验证** — `npm run typecheck` 会因 config.ts 等仍引用旧字段而报错,这是预期的;本步只确认 `src/types.ts` 自身语法无误(报错都来自其他文件)。
-- [ ] **Step 3: 提交** — `git add src/types.ts && git commit -m "refactor: Config 改用 chrome 段(CDP 方案)"`
+- [x] **Step 2: 验证** — `npm run typecheck` 会因 config.ts 等仍引用旧字段而报错,这是预期的;本步只确认 `src/types.ts` 自身语法无误(报错都来自其他文件)。
+- [x] **Step 3: 提交** — `git add src/types.ts && git commit -m "refactor: Config 改用 chrome 段(CDP 方案)"`
 
 ---
 
@@ -60,7 +60,7 @@ export interface Config {
 
 **Files:** Modify: `src/config.ts`, `tests/config.test.ts`
 
-- [ ] **Step 1: 改 `tests/config.test.ts`** — 整个文件替换为:
+- [x] **Step 1: 改 `tests/config.test.ts`** — 整个文件替换为:
 
 ```typescript
 import { describe, it, expect } from 'vitest';
@@ -135,8 +135,8 @@ describe('loadConfig', () => {
 });
 ```
 
-- [ ] **Step 2: 运行测试,确认失败** — `npx vitest run tests/config.test.ts`,预期 FAIL(校验逻辑还在校验旧的 browser 段)。
-- [ ] **Step 3: 改 `src/config.ts`** — 把校验 `browser` 与 `paths` 的两段替换。当前为:
+- [x] **Step 2: 运行测试,确认失败** — `npx vitest run tests/config.test.ts`,预期 FAIL(校验逻辑还在校验旧的 browser 段)。
+- [x] **Step 3: 改 `src/config.ts`** — 把校验 `browser` 与 `paths` 的两段替换。当前为:
 
 ```typescript
   if (!c.browser || typeof c.browser.headless !== 'boolean') fail('browser.headless 必须是布尔值');
@@ -163,8 +163,8 @@ describe('loadConfig', () => {
 
 `src/config.ts` 其余部分(文件存在性、JSON 解析、根类型守卫、sources、pacing 校验)不变。
 
-- [ ] **Step 4: 运行测试,确认通过** — `npx vitest run tests/config.test.ts`,预期 PASS,10 个用例。
-- [ ] **Step 5: 提交** — `git add src/config.ts tests/config.test.ts && git commit -m "refactor: 配置校验改为校验 chrome 段"`
+- [x] **Step 4: 运行测试,确认通过** — `npx vitest run tests/config.test.ts`,预期 PASS,10 个用例。
+- [x] **Step 5: 提交** — `git add src/config.ts tests/config.test.ts && git commit -m "refactor: 配置校验改为校验 chrome 段"`
 
 ---
 
@@ -172,9 +172,9 @@ describe('loadConfig', () => {
 
 **Files:** Create: `src/session/ChromeConnector.ts`, `tests/chromeConnector.test.ts`;Delete: `src/session/SessionManager.ts`, `tests/sessionManager.test.ts`
 
-- [ ] **Step 1: 删除旧文件** — `git rm src/session/SessionManager.ts tests/sessionManager.test.ts`
+- [x] **Step 1: 删除旧文件** — `git rm src/session/SessionManager.ts tests/sessionManager.test.ts`
 
-- [ ] **Step 2: 写失败测试** — 创建 `tests/chromeConnector.test.ts`:
+- [x] **Step 2: 写失败测试** — 创建 `tests/chromeConnector.test.ts`:
 
 ```typescript
 import { describe, it, expect } from 'vitest';
@@ -235,9 +235,9 @@ describe('ChromeConnector', () => {
 });
 ```
 
-- [ ] **Step 3: 运行测试,确认失败** — `npx vitest run tests/chromeConnector.test.ts`,预期 FAIL(模块不存在)。
+- [x] **Step 3: 运行测试,确认失败** — `npx vitest run tests/chromeConnector.test.ts`,预期 FAIL(模块不存在)。
 
-- [ ] **Step 4: 创建 `src/session/ChromeConnector.ts`:**
+- [x] **Step 4: 创建 `src/session/ChromeConnector.ts`:**
 
 ```typescript
 import { spawn } from 'node:child_process';
@@ -292,8 +292,8 @@ export class ChromeConnector {
 
 > 注意:`connect()` 返回的 `browser` 是用户的真实 Chrome。生产代码(observe / collectors)**只可关闭自己新开的标签页(`page.close()`),绝不可调用 `browser.close()`**,否则会关掉用户的浏览器。
 
-- [ ] **Step 5: 运行测试,确认通过** — `npx vitest run tests/chromeConnector.test.ts`,预期 PASS,2 个用例(第二个会启动 headless Chromium,需数秒)。
-- [ ] **Step 6: 提交** — `git add -A src/session tests/chromeConnector.test.ts && git commit -m "feat: ChromeConnector 取代 SessionManager(CDP 附接)"`
+- [x] **Step 5: 运行测试,确认通过** — `npx vitest run tests/chromeConnector.test.ts`,预期 PASS,2 个用例(第二个会启动 headless Chromium,需数秒)。
+- [x] **Step 6: 提交** — `git add -A src/session tests/chromeConnector.test.ts && git commit -m "feat: ChromeConnector 取代 SessionManager(CDP 附接)"`
 
 ---
 
@@ -301,9 +301,9 @@ export class ChromeConnector {
 
 **Files:** Modify: `src/cli.ts`, `config.example.json`;Delete: `src/session/AuthFlow.ts`, `tests/authFlow.test.ts`
 
-- [ ] **Step 1: 删除 AuthFlow** — `git rm src/session/AuthFlow.ts tests/authFlow.test.ts`
+- [x] **Step 1: 删除 AuthFlow** — `git rm src/session/AuthFlow.ts tests/authFlow.test.ts`
 
-- [ ] **Step 2: 整体替换 `src/cli.ts`:**
+- [x] **Step 2: 整体替换 `src/cli.ts`:**
 
 ```typescript
 import { mkdirSync } from 'node:fs';
@@ -368,7 +368,7 @@ main().catch((err) => {
 });
 ```
 
-- [ ] **Step 3: 整体替换 `config.example.json`:**
+- [x] **Step 3: 整体替换 `config.example.json`:**
 
 ```json
 {
@@ -395,10 +395,10 @@ main().catch((err) => {
 }
 ```
 
-- [ ] **Step 4: 验证** — `cp config.example.json config.json && npm run export`,预期打印 `数据库中还没有运行记录,无可导出的职位。`,退出码 0。
-- [ ] **Step 5: 验证命令注册** — `npx tsx src/cli.ts --help`,预期列出 `login` 与 `export`。不要运行 `npm run login`(会启动 Chrome)。
-- [ ] **Step 6: 类型检查** — `npm run typecheck`,预期退出码 0。
-- [ ] **Step 7: 提交** — `git add -A src/cli.ts src/session config.example.json tests && git commit -m "refactor: CLI login 改用 ChromeConnector,删除 AuthFlow"`
+- [x] **Step 4: 验证** — `cp config.example.json config.json && npm run export`,预期打印 `数据库中还没有运行记录,无可导出的职位。`,退出码 0。
+- [x] **Step 5: 验证命令注册** — `npx tsx src/cli.ts --help`,预期列出 `login` 与 `export`。不要运行 `npm run login`(会启动 Chrome)。
+- [x] **Step 6: 类型检查** — `npm run typecheck`,预期退出码 0。
+- [x] **Step 7: 提交** — `git add -A src/cli.ts src/session config.example.json tests && git commit -m "refactor: CLI login 改用 ChromeConnector,删除 AuthFlow"`
 
 ---
 
@@ -406,7 +406,7 @@ main().catch((err) => {
 
 **Files:** Modify: `scripts/observe.ts`
 
-- [ ] **Step 1: 整体替换 `scripts/observe.ts`:**
+- [x] **Step 1: 整体替换 `scripts/observe.ts`:**
 
 ```typescript
 /**
@@ -470,14 +470,14 @@ main().catch((err) => {
 
 > 只 `page.close()` 关闭自己开的标签,不关用户的 Chrome。
 
-- [ ] **Step 2: 类型检查** — `npm run typecheck`,预期退出码 0。
-- [ ] **Step 3: 提交** — `git add scripts/observe.ts && git commit -m "refactor: observe 脚本改用 ChromeConnector 附接"`
+- [x] **Step 2: 类型检查** — `npm run typecheck`,预期退出码 0。
+- [x] **Step 3: 提交** — `git add scripts/observe.ts && git commit -m "refactor: observe 脚本改用 ChromeConnector 附接"`
 
 ---
 
 ## 修订完成标准
 
-- [ ] `npm run test` —— 全部测试通过(config 10 个、chromeConnector 2 个,及未改动的 storage/sourceResolver/pacer/csvExporter)。
-- [ ] `npm run typecheck` —— 无类型错误。
-- [ ] 不再有任何文件引用 `SessionManager`、`AuthFlow`、`storageState`、`Config.browser`。
-- [ ] `npm run export`(空库)正常;`upwork-hub --help` 列出 `login` / `export`。
+- [x] `npm run test` —— 全部测试通过(config 10 个、chromeConnector 2 个,及未改动的 storage/sourceResolver/pacer/csvExporter)。
+- [x] `npm run typecheck` —— 无类型错误。
+- [x] 不再有任何文件引用 `SessionManager`、`AuthFlow`、`storageState`、`Config.browser`。
+- [x] `npm run export`(空库)正常;`upwork-hub --help` 列出 `login` / `export`。

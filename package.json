@@ -5,7 +5,7 @@
   "description": "Upwork 职位信息收集器",
   "scripts": {
     "login": "tsx src/cli.ts login",
-    "collect": "tsx src/cli.ts collect",
+    "watch": "tsx src/cli.ts watch",
     "export": "tsx src/cli.ts export",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
