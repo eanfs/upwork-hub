@@ -21,13 +21,19 @@ function loginCommand(): void {
   );
 }
 
-function promptEnter(message: string): Promise<void> {
+/** 等到 stdin 有一行输入(用户按 Enter)或收到 SIGINT/SIGTERM,whichever 先到。 */
+function waitForStop(): Promise<void> {
   const rl = createInterface({ input: process.stdin, output: process.stdout });
   return new Promise((resolve) => {
-    rl.question(message, () => {
+    const done = (): void => {
       rl.close();
+      process.off('SIGINT', done);
+      process.off('SIGTERM', done);
       resolve();
-    });
+    };
+    rl.once('line', done);
+    process.once('SIGINT', done);
+    process.once('SIGTERM', done);
   });
 }
 
@@ -42,9 +48,9 @@ async function watchCommand(): Promise<void> {
 
   console.log(
     '监听中:在 Chrome 里手动搜索/翻页/点开职位,我会被动捕获 userJobSearch 与详情接口响应。\n' +
-      '完成后回到终端按 Enter 入库...',
+      '完成后回到终端按 Enter 入库(或对进程发 SIGTERM/SIGINT 也会触发入库)...',
   );
-  await promptEnter('');
+  await waitForStop();
 
   const { jobs, listingCount, detailCount } = watcher.collected();
   console.log(`\n准备入库:${jobs.length} 条(列表 ${listingCount},详情 ${detailCount})`);
