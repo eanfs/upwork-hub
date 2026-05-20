@@ -41,7 +41,7 @@
 - Create: `src/collect/Watcher.ts`
 - Create: `tests/watcher.test.ts`
 
-- [ ] **Step 1: 编写失败测试**
+- [x] **Step 1: 编写失败测试**
 
 ```typescript
 // tests/watcher.test.ts
@@ -269,12 +269,12 @@ describe('Watcher', () => {
 });
 ```
 
-- [ ] **Step 2: 运行测试,确认失败**
+- [x] **Step 2: 运行测试,确认失败**
 
 Run: `npx vitest run tests/watcher.test.ts`
 Expected: FAIL —— `Watcher` 模块不存在。
 
-- [ ] **Step 3: 编写最小实现**
+- [x] **Step 3: 编写最小实现**
 
 ```typescript
 // src/collect/Watcher.ts
@@ -404,17 +404,17 @@ export class Watcher {
 }
 ```
 
-- [ ] **Step 4: 运行测试,确认通过**
+- [x] **Step 4: 运行测试,确认通过**
 
 Run: `npx vitest run tests/watcher.test.ts`
 Expected: PASS,6 个用例全过。
 
-- [ ] **Step 5: 类型检查**
+- [x] **Step 5: 类型检查**
 
 Run: `npm run typecheck`
 Expected: 退出码 0。
 
-- [ ] **Step 6: 提交**
+- [x] **Step 6: 提交**
 
 ```bash
 git add src/collect/Watcher.ts tests/watcher.test.ts
@@ -442,14 +442,14 @@ git commit -m "feat: 添加 Watcher 用户驱动被动采集监听器"
 
 > 这一层是薄编排;不写单元测试,以全量回归 + B'3 的手动 E2E 验收。
 
-- [ ] **Step 1: 删除程序化采集器**
+- [x] **Step 1: 删除程序化采集器**
 
 ```bash
 git rm src/collect/ListingCollector.ts src/collect/DetailCollector.ts \
        tests/listingCollector.test.ts tests/detailCollector.test.ts
 ```
 
-- [ ] **Step 2: 改 `src/cli.ts`**
+- [x] **Step 2: 改 `src/cli.ts`**
 
 把这段 import:
 
@@ -535,11 +535,11 @@ async function watchCommand(): Promise<void> {
     .action(watchCommand);
 ```
 
-- [ ] **Step 3: 改 `package.json`**
+- [x] **Step 3: 改 `package.json`**
 
 把 `"collect": "tsx src/cli.ts collect"` 改为 `"watch": "tsx src/cli.ts watch"`。
 
-- [ ] **Step 4: 改 `CLAUDE.md`**
+- [x] **Step 4: 改 `CLAUDE.md`**
 
 把命令区块里的 `npm run export` 上面追加一行 `npm run watch                         # 用户驱动:被动捕获 Chrome 里手动操作触发的响应,按 Enter 入库`。
 
@@ -554,22 +554,22 @@ async function watchCommand(): Promise<void> {
 
 把"阶段化交付"里"**阶段 B**:NetworkCapture、Normalizer、Collectors、`collect` 命令、`SourceResolver` 的分类筛选分支"那一项改为:"**阶段 B'**(2026-05-20):用户驱动 Watcher、`watch` 命令(取代阶段 B 已废弃的程序化 `collect`)、SourceResolver 分类筛选 —— 完成于 `...-phase-b-prime.md`。"
 
-- [ ] **Step 5: 类型检查**
+- [x] **Step 5: 类型检查**
 
 Run: `npm run typecheck`
 Expected: 退出码 0。
 
-- [ ] **Step 6: 跑全量测试,确认无回归**
+- [x] **Step 6: 跑全量测试,确认无回归**
 
 Run: `npm run test`
 Expected: PASS。新增 6 个 watcher 用例;删掉 3(listing) + 1(detail) = 4 个旧 collector 用例。原 52 - 4 + 6 = **54 个**。
 
-- [ ] **Step 7: `npm run watch --help` 验证命令注册**
+- [x] **Step 7: `npm run watch --help` 验证命令注册**
 
 Run: `npx tsx src/cli.ts --help`
 Expected: 列出 `login` / `watch` / `export`,没有 `collect`。
 
-- [ ] **Step 8: 提交**
+- [x] **Step 8: 提交**
 
 ```bash
 git add -A src/cli.ts src/collect tests package.json CLAUDE.md
@@ -584,17 +584,17 @@ git commit -m "feat: watch 命令取代失败的程序化 collect;删除 Listing
 
 **Files:** 无代码改动。
 
-- [ ] **Step 1: 前置 —— 确认 Chrome 在 9222 端口且 Upwork 已登录**
+- [x] **Step 1: 前置 —— 确认 Chrome 在 9222 端口且 Upwork 已登录**
 
 Run: `curl -sf http://127.0.0.1:9222/json/version > /dev/null && echo OK || echo "需重新 npm run login"`
 Expected: `OK`。若不是,先 `npm run login` 完成登录。
 
-- [ ] **Step 2: 启动 watch**
+- [x] **Step 2: 启动 watch**
 
 Run: `npm run watch`
 Expected: 终端打印"监听中:..."并等待 Enter。
 
-- [ ] **Step 3: 用户手动操作 Chrome**
+- [x] **Step 3: 用户手动操作 Chrome**
 
 操作:
 1. 在 Upwork 标签里访问搜索 URL(如 `https://www.upwork.com/nx/search/jobs/?q=react%20developer`),让 SPA 跑出列表
@@ -604,7 +604,7 @@ Expected: 终端打印"监听中:..."并等待 Enter。
 
 Expected: 终端打印 `准备入库:N 条(列表 X,详情 Y)`,然后 `运行 #1 结束:seen=N new=N`。N 至少 10,Y 至少 2。
 
-- [ ] **Step 4: 验证 DB 写入**
+- [x] **Step 4: 验证 DB 写入**
 
 Run:
 ```bash
@@ -622,7 +622,7 @@ Expected:
 - 至少 2 行 `detail_fetched = 1` 且 `category` 非 null
 - `source` 字段包含 `keyword:react developer`(或你搜的关键词)
 
-- [ ] **Step 5: 验证 export**
+- [x] **Step 5: 验证 export**
 
 Run: `npm run export`
 Expected: 打印 `已导出 N 个职位(运行 #...) 到 ./data/exports/upwork-jobs-<timestamp>.csv`。抽查 CSV 几行,字段齐全。
@@ -633,14 +633,14 @@ Expected: 打印 `已导出 N 个职位(运行 #...) 到 ./data/exports/upwork-j
 
 ## 阶段 B' 完成标准
 
-- [ ] `npm run test` —— 全部测试通过(54 个)。
-- [ ] `npm run typecheck` —— 无类型错误。
-- [ ] `npm run watch` —— 在用户手动操作下能完整跑通一次采集,DB 写入正确,详情合并字段(category / subcategory)出现。
-- [ ] `npm run export` —— 能导出最近一次 run 的职位为 CSV。
-- [ ] 没有任何生产代码调用 `browser.close()`。
-- [ ] `src/collect/ListingCollector.ts` / `DetailCollector.ts` 及对应测试已从仓库删除。
-- [ ] CLI 不再有 `collect` 命令;有 `watch` 命令。
-- [ ] CLAUDE.md 与 package.json 同步更新。
+- [x] `npm run test` —— 全部测试通过(54 个)。
+- [x] `npm run typecheck` —— 无类型错误。
+- [x] `npm run watch` —— 在用户手动操作下能完整跑通一次采集,DB 写入正确,详情合并字段(category / subcategory)出现。
+- [x] `npm run export` —— 能导出最近一次 run 的职位为 CSV。
+- [x] 没有任何生产代码调用 `browser.close()`。
+- [x] `src/collect/ListingCollector.ts` / `DetailCollector.ts` 及对应测试已从仓库删除。
+- [x] CLI 不再有 `collect` 命令;有 `watch` 命令。
+- [x] CLAUDE.md 与 package.json 同步更新。
 
 ---
 
