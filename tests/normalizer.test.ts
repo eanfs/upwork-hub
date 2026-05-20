@@ -1,13 +1,18 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { normalizeListingJob } from '../src/collect/Normalizer';
+import { normalizeListingJob, normalizeDetailJob, mergeJobs } from '../src/collect/Normalizer';
 
 const SEARCH_FIXTURE = JSON.parse(
   readFileSync(join(__dirname, 'fixtures/search-response.json'), 'utf8'),
 );
 
 const RESULTS: any[] = SEARCH_FIXTURE.data.search.universalSearchNuxt.userJobSearchV1.results;
+
+const DETAIL_FIXTURE = JSON.parse(
+  readFileSync(join(__dirname, 'fixtures/job-detail-response.json'), 'utf8'),
+);
+const DETAIL: any = DETAIL_FIXTURE.data.jobAuthDetails;
 
 describe('normalizeListingJob', () => {
   it('从 fixture 第一条记录提取必备字段', () => {
@@ -89,5 +94,67 @@ describe('normalizeListingJob', () => {
     expect(normalizeListingJob(hourly, 'kw').projectDuration).toBe(
       hourly.jobTile.job.hourlyEngagementDuration?.label ?? null,
     );
+  });
+});
+
+describe('normalizeDetailJob', () => {
+  it('从 fixture 提取详情专属字段', () => {
+    const job = normalizeDetailJob(DETAIL, 'kw');
+    expect(job.id).toBe(DETAIL.opening.job.info.id);
+    expect(job.url).toBe(`https://www.upwork.com/jobs/${DETAIL.opening.job.info.ciphertext}`);
+    expect(job.title).toBe(DETAIL.opening.job.info.title);
+    expect(job.description).toBe(DETAIL.opening.job.description);
+    expect(job.category).toBe(DETAIL.opening.job.category.name);
+    expect(job.subcategory).toBe(DETAIL.opening.job.categoryGroup.name);
+    expect(job.detailFetched).toBe(true);
+    expect(JSON.parse(job.rawJson)).toEqual(DETAIL);
+  });
+
+  it('详情的 contractorTier 也归一化为小写', () => {
+    const job = normalizeDetailJob(DETAIL, 'kw');
+    expect(['expert', 'intermediate', 'entry']).toContain(job.experienceLevel);
+  });
+
+  it('budget 取 opening.job.info.type(HOURLY/FIXED) + extendedBudgetInfo 或 budget.amount', () => {
+    const job = normalizeDetailJob(DETAIL, 'kw');
+    expect(job.budgetType).toBe(DETAIL.opening.job.info.type === 'FIXED' ? 'fixed' : 'hourly');
+  });
+
+  it('clientPaymentVerified 取 buyer.isPaymentMethodVerified', () => {
+    const d = JSON.parse(JSON.stringify(DETAIL));
+    d.buyer.isPaymentMethodVerified = true;
+    expect(normalizeDetailJob(d, 'kw').clientPaymentVerified).toBe(true);
+    d.buyer.isPaymentMethodVerified = false;
+    expect(normalizeDetailJob(d, 'kw').clientPaymentVerified).toBe(false);
+  });
+});
+
+describe('mergeJobs', () => {
+  it('详情非空字段覆盖列表;detailFetched 取 detail 的值', () => {
+    const listing = normalizeListingJob(RESULTS[0], 'kw');
+    const detail = normalizeDetailJob(DETAIL, 'kw');
+    const merged = mergeJobs(listing, detail);
+    expect(merged.id).toBe(listing.id);
+    expect(merged.title).toBe(detail.title);
+    expect(merged.description).toBe(detail.description);
+    expect(merged.category).toBe(detail.category);
+    expect(merged.subcategory).toBe(detail.subcategory);
+    expect(merged.detailFetched).toBe(true);
+    expect(merged.source).toBe(listing.source);
+  });
+
+  it('详情为空的字段不覆盖列表已有非空值', () => {
+    const listing = { ...normalizeListingJob(RESULTS[0], 'kw'), clientCountry: 'USA' };
+    const detail = { ...normalizeDetailJob(DETAIL, 'kw'), clientCountry: null };
+    expect(mergeJobs(listing, detail).clientCountry).toBe('USA');
+  });
+
+  it('rawJson 拼成 {listing, detail} 双载荷', () => {
+    const listing = normalizeListingJob(RESULTS[0], 'kw');
+    const detail = normalizeDetailJob(DETAIL, 'kw');
+    const merged = mergeJobs(listing, detail);
+    const parsed = JSON.parse(merged.rawJson);
+    expect(parsed).toHaveProperty('listing');
+    expect(parsed).toHaveProperty('detail');
   });
 });

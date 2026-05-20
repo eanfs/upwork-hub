@@ -96,3 +96,106 @@ export function normalizeListingJob(raw: unknown, source: string): Job {
     rawJson: JSON.stringify(raw),
   };
 }
+
+interface DetailJob {
+  opening: {
+    job: {
+      description: string | null;
+      contractorTier: string | null;
+      postedOn: string | null;
+      publishTime: string | null;
+      engagementDuration: { label: string } | null;
+      extendedBudgetInfo: { hourlyBudgetMin: string | null; hourlyBudgetMax: string | null } | null;
+      budget: { amount: number; currencyCode: string } | null;
+      category: { name: string; urlSlug: string } | null;
+      categoryGroup: { name: string; urlSlug: string } | null;
+      clientActivity: { totalApplicants: number | null } | null;
+      info: {
+        id: string;
+        ciphertext: string;
+        title: string;
+        type: 'FIXED' | 'HOURLY';
+      };
+      sandsData: { additionalSkills: { prefLabel: string }[] | null } | null;
+    };
+  };
+  buyer: {
+    isPaymentMethodVerified: boolean | null;
+    info: {
+      location: { country: string | null } | null;
+      stats: { totalCharges: number | null; score: number | null; feedbackCount: number | null } | null;
+    } | null;
+  };
+}
+
+/** 把 data.jobAuthDetails 一条记录映射为 Job(detailFetched=true)。 */
+export function normalizeDetailJob(raw: unknown, source: string): Job {
+  const d = raw as DetailJob;
+  const j = d.opening.job;
+  const isFixed = j.info.type === 'FIXED';
+  const budgetType: BudgetType = isFixed ? 'fixed' : 'hourly';
+  const buyerInfo = d.buyer?.info;
+  const stats = buyerInfo?.stats;
+
+  return {
+    id: j.info.id,
+    url: `https://www.upwork.com/jobs/${j.info.ciphertext}`,
+    title: j.info.title,
+    description: j.description,
+    budgetType,
+    budgetAmount: isFixed && j.budget ? j.budget.amount : null,
+    hourlyMin: !isFixed ? toNumber(j.extendedBudgetInfo?.hourlyBudgetMin ?? null) : null,
+    hourlyMax: !isFixed ? toNumber(j.extendedBudgetInfo?.hourlyBudgetMax ?? null) : null,
+    skills: (j.sandsData?.additionalSkills ?? []).map((s) => s.prefLabel),
+    category: j.category?.name ?? null,
+    subcategory: j.categoryGroup?.name ?? null,
+    experienceLevel: normalizeTier(j.contractorTier),
+    projectDuration: j.engagementDuration?.label ?? null,
+    proposalsCount: j.clientActivity?.totalApplicants ?? null,
+    clientCountry: buyerInfo?.location?.country ?? null,
+    clientTotalSpent: stats?.totalCharges ?? null,
+    clientHireRate: null,
+    clientRating: stats?.score ?? null,
+    clientPaymentVerified: d.buyer?.isPaymentMethodVerified ?? null,
+    postedAt: j.publishTime ?? j.postedOn ?? null,
+    source,
+    detailFetched: true,
+    rawJson: JSON.stringify(raw),
+  };
+}
+
+/** 把详情 Job 并到列表 Job 上;详情非空字段覆盖列表对应字段。 */
+export function mergeJobs(listing: Job, detail: Job): Job {
+  const pick = <K extends keyof Job>(k: K): Job[K] => {
+    const dv = detail[k];
+    if (dv === null || dv === undefined) return listing[k];
+    if (Array.isArray(dv) && dv.length === 0) return listing[k];
+    return dv;
+  };
+
+  return {
+    ...listing,
+    title: pick('title') as string,
+    description: pick('description'),
+    budgetType: pick('budgetType'),
+    budgetAmount: pick('budgetAmount'),
+    hourlyMin: pick('hourlyMin'),
+    hourlyMax: pick('hourlyMax'),
+    skills: pick('skills'),
+    category: pick('category'),
+    subcategory: pick('subcategory'),
+    experienceLevel: pick('experienceLevel'),
+    projectDuration: pick('projectDuration'),
+    proposalsCount: pick('proposalsCount'),
+    clientCountry: pick('clientCountry'),
+    clientTotalSpent: pick('clientTotalSpent'),
+    clientRating: pick('clientRating'),
+    clientPaymentVerified: pick('clientPaymentVerified'),
+    postedAt: pick('postedAt'),
+    detailFetched: true,
+    rawJson: JSON.stringify({
+      listing: JSON.parse(listing.rawJson),
+      detail: JSON.parse(detail.rawJson),
+    }),
+  };
+}
