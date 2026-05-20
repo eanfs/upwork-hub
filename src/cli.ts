@@ -63,21 +63,40 @@ async function watchCommand(): Promise<void> {
   const now = (): string => new Date().toISOString();
   const runId = storage.startRun(now());
   let jobsNew = 0;
+  let failed = 0;
   try {
     for (const job of jobs) {
-      const { isNew } = storage.upsertJob(job, now());
-      storage.linkRunJob(runId, job.id, isNew);
-      if (isNew) jobsNew++;
+      try {
+        const { isNew } = storage.upsertJob(job, now());
+        storage.linkRunJob(runId, job.id, isNew);
+        if (isNew) jobsNew++;
+      } catch (err) {
+        failed++;
+        console.error(`\nupsert 失败 id=${job.id}: ${err instanceof Error ? err.message : err}`);
+        console.error('Job 字段类型/预览:');
+        for (const [k, v] of Object.entries(job)) {
+          const t = v === null ? 'null' : Array.isArray(v) ? 'array' : typeof v;
+          const preview = (() => {
+            try {
+              return JSON.stringify(v)?.slice(0, 100);
+            } catch {
+              return String(v);
+            }
+          })();
+          console.error(`  ${k}: ${t}  ${preview}`);
+        }
+      }
     }
     storage.finishRun(runId, {
-      jobsSeen: jobs.length,
+      jobsSeen: jobs.length - failed,
       jobsNew,
-      status: 'success',
+      status: failed === 0 ? 'success' : 'failed',
       finishedAt: now(),
     });
   } finally {
     storage.close();
   }
+  if (failed > 0) console.log(`(${failed} 条 upsert 失败,详见上方日志)`);
   console.log(`运行 #${runId} 结束:seen=${jobs.length} new=${jobsNew}`);
 }
 
