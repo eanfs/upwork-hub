@@ -4,9 +4,9 @@
   "private": true,
   "description": "Upwork 职位信息收集器",
   "scripts": {
-    "login": "tsx src/cli.ts login",
-    "watch": "tsx src/cli.ts watch",
-    "export": "tsx src/cli.ts export",
+    "login": "node --import tsx src/cli.ts login",
+    "watch": "node --import tsx src/cli.ts watch",
+    "export": "node --import tsx src/cli.ts export",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },

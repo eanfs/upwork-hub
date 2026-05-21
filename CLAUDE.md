@@ -16,6 +16,8 @@ npm run export                        # 导出最近一次运行的职位为 CSV
 
 无 build / lint 步骤。TypeScript 经 `tsx` 直接运行,不产出 `dist/`。
 
+> CLI 脚本(login/watch/export)用 `node --import tsx src/cli.ts` 而**不是** `tsx src/cli.ts`:`tsx` CLI 会把代码跑在子进程里,导致 SIGTERM 发到包装进程时不转发给真正注册了信号 handler 的子进程(`watch` 的优雅入库收不到 SIGTERM)。`node --import tsx` 是单进程,信号直达。改回 `tsx` 会重新引入此 bug。
+
 ## 架构
 
 命令行工具,在**用户已手动登录的真实 Chrome** 中观察其自身网络请求,采集 Upwork 职位。详见 `docs/superpowers/specs/2026-05-17-upwork-job-collector-design.md`。
