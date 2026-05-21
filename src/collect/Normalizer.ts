@@ -123,7 +123,11 @@ interface DetailJob {
     isPaymentMethodVerified: boolean | null;
     info: {
       location: { country: string | null } | null;
-      stats: { totalCharges: number | null; score: number | null; feedbackCount: number | null } | null;
+      stats: {
+        totalCharges: { amount: number } | null;
+        score: number | null;
+        feedbackCount: number | null;
+      } | null;
     } | null;
   };
 }
@@ -153,7 +157,7 @@ export function normalizeDetailJob(raw: unknown, source: string): Job {
     projectDuration: j.engagementDuration?.label ?? null,
     proposalsCount: j.clientActivity?.totalApplicants ?? null,
     clientCountry: buyerInfo?.location?.country ?? null,
-    clientTotalSpent: stats?.totalCharges ?? null,
+    clientTotalSpent: toNumber(stats?.totalCharges?.amount ?? null),
     clientHireRate: null,
     clientRating: stats?.score ?? null,
     clientPaymentVerified: d.buyer?.isPaymentMethodVerified ?? null,

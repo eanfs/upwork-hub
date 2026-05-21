@@ -127,6 +127,21 @@ describe('normalizeDetailJob', () => {
     d.buyer.isPaymentMethodVerified = false;
     expect(normalizeDetailJob(d, 'kw').clientPaymentVerified).toBe(false);
   });
+
+  it('clientTotalSpent 从 totalCharges 对象提取数字(有消费历史的客户)', () => {
+    // 真实数据:有消费历史的客户 totalCharges 是 { amount: <number> },无消费时为 null
+    const d = JSON.parse(JSON.stringify(DETAIL));
+    d.buyer.info.stats.totalCharges = { amount: 21541.5 };
+    const job = normalizeDetailJob(d, 'kw');
+    expect(job.clientTotalSpent).toBe(21541.5);
+    expect(typeof job.clientTotalSpent).toBe('number');
+  });
+
+  it('clientTotalSpent 在 totalCharges 为 null 时为 null', () => {
+    const d = JSON.parse(JSON.stringify(DETAIL));
+    d.buyer.info.stats.totalCharges = null;
+    expect(normalizeDetailJob(d, 'kw').clientTotalSpent).toBeNull();
+  });
 });
 
 describe('mergeJobs', () => {
