@@ -44,23 +44,10 @@ export interface Run {
   status: RunStatus;
 }
 
-export interface CategoryFilter {
-  category: string;
-  budgetMin?: number;
-  experienceLevel?: string;
-}
-
 export interface Config {
   sources: {
     keywords: string[];
     savedSearches: string[];
-    categoryFilters: CategoryFilter[];
-  };
-  pacing: {
-    minDelayMs: number;
-    maxDelayMs: number;
-    maxPagesPerSource: number;
-    maxDetailsPerRun: number;
   };
   chrome: {
     cdpPort: number;

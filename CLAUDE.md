@@ -32,7 +32,7 @@ npm run export                        # 导出最近一次运行的职位为 CSV
 
 `Config`(`config.ts`,校验 `chrome` 段)→ `ChromeConnector` 附接 → `Watcher`(被动监听用户在 Chrome 里的搜索/详情响应,按 URL 推断 source)→ `Normalizer`(`userJobSearch` / 详情响应 → `Job`,可合并)→ `Storage`(SQLite upsert 去重)→ `CsvExporter`。
 
-> `SourceResolver` 与 `Pacer` 是阶段 A 留下的工具:前者把配置里的 keywords/savedSearches 展开成 URL(目前只作参考,因为 watch 模式不再程序化导航);后者在动作之间插入随机延时(目前 watch 模式也不需要,留作将来主动模式备用)。阶段 B 实现的 `ListingCollector` / `DetailCollector` 与 `collect` 命令已在阶段 B' 删除,因为真实 Upwork SPA 不响应程序化导航触发的搜索。
+> 阶段 B 实现的 `ListingCollector` / `DetailCollector` / `collect` 命令在阶段 B' 删除(真实 Upwork SPA 不响应程序化导航触发的搜索)。`SourceResolver` / `Pacer` 与 `Config.sources.categoryFilters` / `Config.pacing` 也随之删除——watch 模式纯用户驱动,无需程序化展开 URL 或节奏控制。`Config.sources` 仅保留 `keywords` / `savedSearches`,目前不被任何命令消费,作搜索意图记录。
 
 `Storage` 三表:`jobs`(以 `id` 为主键,upsert 时 `isNew` 标志区分新旧、`firstSeen` 永不被覆盖)、`runs`、`run_jobs`。
 
@@ -43,7 +43,7 @@ npm run export                        # 导出最近一次运行的职位为 CSV
 - **发现任务**(阶段 A Task 11):用真实会话观察 Upwork 接口,产出 `tests/fixtures/*.json` 与 `docs/superpowers/specs/upwork-api-findings.md`,已完成。
 - **阶段 B**(`...-phase-b.md`):NetworkCapture、Normalizer、程序化 ListingCollector / DetailCollector、`collect` 命令、SourceResolver 拒绝 categoryFilters —— 代码完成,但 E2E 证实程序化导航不可用,已在 B' 删除 ListingCollector / DetailCollector / `collect`。
 - **阶段 B'**(`...-phase-b-prime.md`):Watcher 被动监听 + `watch` 命令,取代程序化采集。已完成。
-- 后续:SourceResolver 的分类筛选分支(URL 参数尚未观察),长驻 watcher 持久化,多 profile 支持。
+- 后续:长驻 watcher 持久化(增量入库),多 profile 支持。
 
 按计划开发时:每个编码任务严格 TDD(先写失败测试再写最小实现),每任务结束提交一次。
 

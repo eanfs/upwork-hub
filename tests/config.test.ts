@@ -12,8 +12,7 @@ function tmpConfig(content: string): string {
 }
 
 const validConfig = {
-  sources: { keywords: ['react'], savedSearches: [], categoryFilters: [] },
-  pacing: { minDelayMs: 3000, maxDelayMs: 8000, maxPagesPerSource: 5, maxDetailsPerRun: 50 },
+  sources: { keywords: ['react'], savedSearches: [] },
   chrome: { cdpPort: 9222, userDataDir: './data/chrome-profile', executablePath: '/path/to/chrome' },
   paths: { database: './data/u.db', exportDir: './data/exports' },
 };
@@ -31,11 +30,6 @@ describe('loadConfig', () => {
     expect(() => loadConfig(tmpConfig(JSON.stringify(bad)))).toThrow(/sources/);
   });
 
-  it('minDelayMs 大于 maxDelayMs 时报错', () => {
-    const bad = { ...validConfig, pacing: { ...validConfig.pacing, minDelayMs: 9000 } };
-    expect(() => loadConfig(tmpConfig(JSON.stringify(bad)))).toThrow(/minDelayMs/);
-  });
-
   it('文件不存在时报错', () => {
     expect(() => loadConfig('/no/such/config.json')).toThrow(/找不到配置文件/);
   });
@@ -46,11 +40,6 @@ describe('loadConfig', () => {
 
   it('配置不是对象时报错', () => {
     expect(() => loadConfig(tmpConfig('[]'))).toThrow(/对象/);
-  });
-
-  it('pacing.maxPagesPerSource 非数字时报错', () => {
-    const bad = { ...validConfig, pacing: { ...validConfig.pacing, maxPagesPerSource: 'x' } };
-    expect(() => loadConfig(tmpConfig(JSON.stringify(bad)))).toThrow(/maxPagesPerSource/);
   });
 
   it('chrome.cdpPort 非数字时报错', () => {

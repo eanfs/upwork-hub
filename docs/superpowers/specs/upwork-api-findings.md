@@ -83,6 +83,8 @@
 
 ## 4. 分类筛选 URL 参数
 
+> **2026-05-21 更新:已废弃。** 阶段 B' 把采集改为纯用户驱动的 `watch` 模式后,`SourceResolver` / `CategoryFilter` / `Config.sources.categoryFilters` 全部删除——用户直接在 Chrome 里手动点筛选,无需程序化展开 URL。下面的内容仅作历史记录保留。
+
 **本次未观察到分类筛选点击。** 仅观察到:
 - `q=<keyword>` —— 关键词搜索
 

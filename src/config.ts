@@ -22,14 +22,6 @@ export function loadConfig(path: string): Config {
   if (!c.sources) fail('缺少 sources');
   if (!Array.isArray(c.sources.keywords)) fail('sources.keywords 必须是数组');
   if (!Array.isArray(c.sources.savedSearches)) fail('sources.savedSearches 必须是数组');
-  if (!Array.isArray(c.sources.categoryFilters)) fail('sources.categoryFilters 必须是数组');
-
-  if (!c.pacing) fail('缺少 pacing');
-  const p = c.pacing;
-  for (const k of ['minDelayMs', 'maxDelayMs', 'maxPagesPerSource', 'maxDetailsPerRun'] as const) {
-    if (typeof p[k] !== 'number') fail(`pacing.${k} 必须是数字`);
-  }
-  if (p.minDelayMs > p.maxDelayMs) fail('pacing.minDelayMs 不能大于 maxDelayMs');
 
   if (!c.chrome) fail('缺少 chrome');
   if (typeof c.chrome.cdpPort !== 'number') fail('chrome.cdpPort 必须是数字');
