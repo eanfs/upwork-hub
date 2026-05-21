@@ -7,6 +7,7 @@ import { ChromeConnector } from './session/ChromeConnector';
 import { Storage } from './storage/Storage';
 import { exportJobsToCsv } from './export/CsvExporter';
 import { Watcher } from './collect/Watcher';
+import type { Job } from './types';
 
 const CONFIG_PATH = process.env.UPWORK_HUB_CONFIG ?? './config.json';
 
@@ -37,58 +38,64 @@ function waitForStop(): Promise<void> {
   });
 }
 
+function dumpJobFields(job: Job): void {
+  console.error('Job 字段类型/预览:');
+  for (const [k, v] of Object.entries(job)) {
+    const t = v === null ? 'null' : Array.isArray(v) ? 'array' : typeof v;
+    const preview = (() => {
+      try {
+        return JSON.stringify(v)?.slice(0, 100);
+      } catch {
+        return String(v);
+      }
+    })();
+    console.error(`  ${k}: ${t}  ${preview}`);
+  }
+}
+
 async function watchCommand(): Promise<void> {
   const config = loadConfig(CONFIG_PATH);
   mkdirSync(dirname(config.paths.database), { recursive: true });
+  const now = (): string => new Date().toISOString();
 
   const connector = new ChromeConnector(config.chrome);
   const { context } = await connector.connect();
-  const watcher = new Watcher(context);
+
+  // 增量入库:每捕获一条就 upsert,进程崩溃也只丢正在处理的那条。
+  const storage = new Storage(config.paths.database);
+  const runId = storage.startRun(now());
+  const seenIds = new Set<string>();
+  let jobsNew = 0;
+  let failed = 0;
+
+  const onJob = (job: Job): void => {
+    try {
+      const { isNew } = storage.upsertJob(job, now());
+      if (!seenIds.has(job.id)) {
+        seenIds.add(job.id);
+        storage.linkRunJob(runId, job.id, isNew);
+        if (isNew) jobsNew++;
+      }
+    } catch (err) {
+      failed++;
+      console.error(`\nupsert 失败 id=${job.id}: ${err instanceof Error ? err.message : err}`);
+      dumpJobFields(job);
+    }
+  };
+
+  const watcher = new Watcher(context, onJob);
   watcher.start();
 
   console.log(
-    '监听中:在 Chrome 里手动搜索/翻页/点开职位,我会被动捕获 userJobSearch 与详情接口响应。\n' +
-      '完成后回到终端按 Enter 入库(或对进程发 SIGTERM/SIGINT 也会触发入库)...',
+    '监听中:在 Chrome 里手动搜索/翻页/点开职位,我会被动捕获 userJobSearch 与详情接口响应,\n' +
+      '并实时增量入库(进程中断也不丢已采集数据)。\n' +
+      '完成后回到终端按 Enter 收尾(或对进程发 SIGTERM/SIGINT 也会收尾)...',
   );
   await waitForStop();
 
-  const { jobs, listingCount, detailCount } = watcher.collected();
-  console.log(`\n准备入库:${jobs.length} 条(列表 ${listingCount},详情 ${detailCount})`);
-  if (jobs.length === 0) {
-    console.log('没有捕获到任何职位,可能 Chrome 里没触发 userJobSearch。不写入数据库。');
-    return;
-  }
-
-  const storage = new Storage(config.paths.database);
-  const now = (): string => new Date().toISOString();
-  const runId = storage.startRun(now());
-  let jobsNew = 0;
-  let failed = 0;
   try {
-    for (const job of jobs) {
-      try {
-        const { isNew } = storage.upsertJob(job, now());
-        storage.linkRunJob(runId, job.id, isNew);
-        if (isNew) jobsNew++;
-      } catch (err) {
-        failed++;
-        console.error(`\nupsert 失败 id=${job.id}: ${err instanceof Error ? err.message : err}`);
-        console.error('Job 字段类型/预览:');
-        for (const [k, v] of Object.entries(job)) {
-          const t = v === null ? 'null' : Array.isArray(v) ? 'array' : typeof v;
-          const preview = (() => {
-            try {
-              return JSON.stringify(v)?.slice(0, 100);
-            } catch {
-              return String(v);
-            }
-          })();
-          console.error(`  ${k}: ${t}  ${preview}`);
-        }
-      }
-    }
     storage.finishRun(runId, {
-      jobsSeen: jobs.length - failed,
+      jobsSeen: seenIds.size,
       jobsNew,
       status: failed === 0 ? 'success' : 'failed',
       finishedAt: now(),
@@ -97,7 +104,7 @@ async function watchCommand(): Promise<void> {
     storage.close();
   }
   if (failed > 0) console.log(`(${failed} 条 upsert 失败,详见上方日志)`);
-  console.log(`运行 #${runId} 结束:seen=${jobs.length} new=${jobsNew}`);
+  console.log(`运行 #${runId} 结束:seen=${seenIds.size} new=${jobsNew}`);
 }
 
 function exportCommand(): void {

@@ -50,14 +50,18 @@ interface DetailBody {
 /**
  * 监听 BrowserContext 的所有页面(已有 + 后续新开),
  * 被动捕获 Upwork 列表与详情 GraphQL 响应,归一化进内存 map。
- * 调用 collected() 取合并结果。
+ * 调用 collected() 取合并结果;若传入 onJob,则每捕获一条就回调一次
+ * 当前最佳 Job(列表/详情已合并),供调用方增量入库。
  */
 export class Watcher {
   private readonly listingByJobId = new Map<string, Job>();
   private readonly detailByJobId = new Map<string, Job>();
   private started = false;
 
-  constructor(private readonly context: BrowserContext) {}
+  constructor(
+    private readonly context: BrowserContext,
+    private readonly onJob?: (job: Job) => void,
+  ) {}
 
   start(): void {
     if (this.started) return;
@@ -96,24 +100,38 @@ export class Watcher {
       for (const raw of results) {
         const job = normalizeListingJob(raw, source);
         this.listingByJobId.set(job.id, job);
+        this.emitJob(job.id);
       }
     } else {
       const jad = (body as DetailBody).data?.jobAuthDetails;
       if (!jad) return;
       const job = normalizeDetailJob(jad, source);
       this.detailByJobId.set(job.id, job);
+      this.emitJob(job.id);
     }
+  }
+
+  /** 计算某 id 当前最佳 Job:列表与详情都有则合并,否则取存在的那个。 */
+  private bestJob(id: string): Job | undefined {
+    const listing = this.listingByJobId.get(id);
+    const detail = this.detailByJobId.get(id);
+    if (listing && detail) return mergeJobs(listing, detail);
+    return listing ?? detail;
+  }
+
+  private emitJob(id: string): void {
+    if (!this.onJob) return;
+    const job = this.bestJob(id);
+    if (job) this.onJob(job);
   }
 
   /** 取所有已捕获 Job:同 id 的列表/详情合并;只有详情没有列表的也带上。 */
   collected(): { jobs: Job[]; listingCount: number; detailCount: number } {
+    const ids = new Set<string>([...this.listingByJobId.keys(), ...this.detailByJobId.keys()]);
     const jobs: Job[] = [];
-    for (const [id, listing] of this.listingByJobId) {
-      const detail = this.detailByJobId.get(id);
-      jobs.push(detail ? mergeJobs(listing, detail) : listing);
-    }
-    for (const [id, detail] of this.detailByJobId) {
-      if (!this.listingByJobId.has(id)) jobs.push(detail);
+    for (const id of ids) {
+      const job = this.bestJob(id);
+      if (job) jobs.push(job);
     }
     return {
       jobs,
