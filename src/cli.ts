@@ -75,6 +75,8 @@ async function watchCommand(): Promise<void> {
         seenIds.add(job.id);
         storage.linkRunJob(runId, job.id, isNew);
         if (isNew) jobsNew++;
+        const kind = job.detailFetched ? '详情' : '列表';
+        console.log(`  + [${kind}] ${job.id}  ${job.title.slice(0, 50)}`);
       }
     } catch (err) {
       failed++;
@@ -92,6 +94,8 @@ async function watchCommand(): Promise<void> {
       '完成后回到终端按 Enter 收尾(或对进程发 SIGTERM/SIGINT 也会收尾)...',
   );
   await waitForStop();
+
+  watcher.stop();
 
   try {
     storage.finishRun(runId, {

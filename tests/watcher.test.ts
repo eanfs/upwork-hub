@@ -278,5 +278,34 @@ describe('Watcher', () => {
     expect(merged.category).toBe(DETAIL_FIXTURE.data.jobAuthDetails.opening.job.category.name);
     // 合并后 source 仍取列表侧
     expect(merged.source).toBe('keyword:react');
+    watcher.stop();
+  });
+
+  it('对定期扫描新出现的页面也 attach', async () => {
+    const ctx = new FakeContext();
+    const watcher = new Watcher(ctx as never);
+    watcher.start();
+
+    // 模拟一个新页面，它没有通过 ctx 'page' 事件发出，而是直接放入 pages() 数组
+    const newPage = new FakePage('https://www.upwork.com/nx/search/jobs/?q=golang');
+    ctx.presetPage(newPage);
+
+    // 等待扫描周期 (1000ms)，我们等待 1100ms 确保扫描完成
+    await new Promise((r) => setTimeout(r, 1100));
+
+    newPage.emit(
+      'response',
+      new FakeResponse(
+        'https://www.upwork.com/api/graphql/v1?alias=userJobSearch',
+        JSON_CT,
+        SEARCH_FIXTURE,
+      ),
+    );
+    await flush();
+
+    expect(watcher.collected().listingCount).toBeGreaterThan(0);
+    expect(watcher.collected().jobs[0].source).toBe('keyword:golang');
+
+    watcher.stop();
   });
 });

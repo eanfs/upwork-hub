@@ -47,6 +47,11 @@ interface DetailBody {
   data?: { jobAuthDetails?: unknown };
 }
 
+/** UPWORK_HUB_DEBUG 置位时输出诊断日志(走 stderr,不污染正常输出)。 */
+function dbg(msg: string): void {
+  if (process.env.UPWORK_HUB_DEBUG) console.error(`[watcher] ${msg}`);
+}
+
 /**
  * 监听 BrowserContext 的所有页面(已有 + 后续新开),
  * 被动捕获 Upwork 列表与详情 GraphQL 响应,归一化进内存 map。
@@ -56,7 +61,9 @@ interface DetailBody {
 export class Watcher {
   private readonly listingByJobId = new Map<string, Job>();
   private readonly detailByJobId = new Map<string, Job>();
+  private readonly attachedPages = new Set<Page>();
   private started = false;
+  private scanInterval?: NodeJS.Timeout;
 
   constructor(
     private readonly context: BrowserContext,
@@ -66,13 +73,61 @@ export class Watcher {
   start(): void {
     if (this.started) return;
     this.started = true;
-    for (const p of this.context.pages()) this.attach(p);
-    this.context.on('page', (p) => this.attach(p));
+
+    // 初次扫描并附接已有页面
+    this.scanAndAttach();
+
+    // 监听新打开的页面 (在能够被触发的情况下)
+    this.context.on('page', (p) => {
+      dbg(`context 'page' 事件:${p.url()}`);
+      this.attach(p);
+    });
+
+    // 定期重扫已有页面，防止 connectOverCDP 下 context.on('page') 漏掉用户手动新开的标签/窗口
+    this.scanInterval = setInterval(() => {
+      this.scanAndAttach();
+    }, 1000);
+
+    // unref 避免定时器阻碍 Node 进程优雅退出
+    if (typeof this.scanInterval.unref === 'function') {
+      this.scanInterval.unref();
+    }
+  }
+
+  /** 停止定期扫描以释放资源 */
+  stop(): void {
+    if (this.scanInterval) {
+      clearInterval(this.scanInterval);
+      this.scanInterval = undefined;
+    }
+  }
+
+  private scanAndAttach(): void {
+    try {
+      const existing = this.context.pages();
+      for (const p of existing) {
+        if (!this.attachedPages.has(p)) {
+          this.attach(p);
+        }
+      }
+    } catch (err) {
+      dbg(`扫描页面失败: ${err instanceof Error ? err.message : err}`);
+    }
   }
 
   private attach(page: Page): void {
+    if (this.attachedPages.has(page)) return;
+    this.attachedPages.add(page);
+
+    dbg(`attach 到页面:${page.url()}`);
     page.on('response', (res) => {
       void this.onResponse(page, res);
+    });
+
+    // 监听页面关闭，移出 Set 避免内存泄漏
+    page.on('close', () => {
+      dbg(`页面已关闭:${page.url()}`);
+      this.attachedPages.delete(page);
     });
   }
 
@@ -84,6 +139,7 @@ export class Watcher {
 
     const isSearch = SEARCH_PRED(url);
     const isDetail = !isSearch && DETAIL_PRED(url);
+    dbg(`upwork JSON 响应${isSearch ? ' [列表]' : isDetail ? ' [详情]' : ''}:${url.slice(0, 110)}`);
     if (!isSearch && !isDetail) return;
 
     let body: unknown;
