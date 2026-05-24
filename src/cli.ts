@@ -107,6 +107,13 @@ async function watchCommand(opts: WatchOptions): Promise<void> {
         await page.goto('https://www.upwork.com/nx/search/jobs/');
       } else {
         console.log(`使用已打开的 Upwork 页面: ${page.url()}`);
+        // 如果页面 URL 包含 /details/，说明职位详情侧边栏滑块打开着，会遮挡主布局。
+        // 我们通过模拟按 Escape 键来将其关闭，使其恢复到纯粹的列表搜索视图。
+        if (page.url().includes('/details/')) {
+          console.log('检测到详情滑块处于打开状态，正在模拟按 Escape 键关闭滑块以释放布局...');
+          await page.keyboard.press('Escape');
+          await page.waitForTimeout(1500);
+        }
       }
 
       // 2. 模拟聚焦、输入并搜索
