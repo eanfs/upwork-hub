@@ -53,7 +53,12 @@ function dumpJobFields(job: Job): void {
   }
 }
 
-async function watchCommand(): Promise<void> {
+interface WatchOptions {
+  keyword?: string;
+  pages?: string;
+}
+
+async function watchCommand(opts: WatchOptions): Promise<void> {
   const config = loadConfig(CONFIG_PATH);
   mkdirSync(dirname(config.paths.database), { recursive: true });
   const now = (): string => new Date().toISOString();
@@ -88,12 +93,67 @@ async function watchCommand(): Promise<void> {
   const watcher = new Watcher(context, onJob);
   watcher.start();
 
-  console.log(
-    '监听中:在 Chrome 里手动搜索/翻页/点开职位,我会被动捕获 userJobSearch 与详情接口响应,\n' +
-      '并实时增量入库(进程中断也不丢已采集数据)。\n' +
-      '完成后回到终端按 Enter 收尾(或对进程发 SIGTERM/SIGINT 也会收尾)...',
-  );
-  await waitForStop();
+  if (opts.keyword) {
+    const keyword = opts.keyword;
+    const maxPages = parseInt(opts.pages ?? '3', 10);
+    console.log(`自动提取模式启动: 关键词="${keyword}"，最大拉取页数=${maxPages}`);
+
+    try {
+      // 1. 获取或新建页面
+      let page = context.pages().find((p) => p.url().includes('upwork.com'));
+      if (!page) {
+        console.log('未找到已打开的 Upwork 页面，正在打开新标签页...');
+        page = await context.newPage();
+        await page.goto('https://www.upwork.com/nx/search/jobs/');
+      } else {
+        console.log(`使用已打开的 Upwork 页面: ${page.url()}`);
+      }
+
+      // 2. 模拟聚焦、输入并搜索
+      console.log(`正在输入关键词并在页面上触发搜索...`);
+      const searchSelector = 'input.air3-typeahead-input-fake, input[data-cy="search-input"], input[placeholder="Search"]';
+      const searchInput = page.locator(searchSelector).first();
+      await searchInput.waitFor({ state: 'visible', timeout: 15000 });
+      await searchInput.click();
+      await searchInput.fill(keyword);
+      await searchInput.press('Enter');
+
+      // 等待第一页加载
+      await page.waitForTimeout(5000);
+
+      // 3. 多页循环控制
+      for (let i = 2; i <= maxPages; i++) {
+        const nextButton = page.locator('a[data-test="next-page"], a[data-ev-label="pagination_next_page"]');
+        const isVisible = await nextButton.isVisible().catch(() => false);
+        if (!isVisible) {
+          console.log(`未找到第 ${i} 页的下一页按钮，可能已到尾页或搜索结果不足。`);
+          break;
+        }
+
+        // 4~8s 随机真人级延时
+        const pacingMs = Math.floor(Math.random() * 4000) + 4000;
+        console.log(`已捕获当前页。等待 ${Math.round(pacingMs / 1000)} 秒后模拟点击翻页...`);
+        await page.waitForTimeout(pacingMs);
+
+        console.log(`正在模拟点击前往第 ${i} 页...`);
+        await nextButton.click();
+        
+        // 等待第 i 页加载及响应捕获
+        await page.waitForTimeout(5000);
+      }
+
+      console.log('所有指定页面请求完成。正在自动收尾数据...');
+    } catch (err) {
+      console.error(`自动提取过程中出错: ${err instanceof Error ? err.message : err}`);
+    }
+  } else {
+    console.log(
+      '监听中:在 Chrome 里手动搜索/翻页/点开职位,我会被动捕获 userJobSearch 与详情接口响应,\n' +
+        '并实时增量入库(进程中断也不丢已采集数据)。\n' +
+        '完成后回到终端按 Enter 收尾(或对进程发 SIGTERM/SIGINT 也会收尾)...',
+    );
+    await waitForStop();
+  }
 
   watcher.stop();
 
@@ -141,7 +201,11 @@ async function main(): Promise<void> {
   program
     .command('watch')
     .description('附接已登录的 Chrome,被动监听你手动操作触发的搜索/详情响应,按 Enter 入库')
-    .action(watchCommand);
+    .option('-k, --keyword <keyword>', '自动在 Chrome 中执行指定的关键词搜索并拉取数据')
+    .option('-p, --pages <number>', '自动翻页拉取的最大页数', '3')
+    .action(async (options: { keyword?: string; pages: string }) => {
+      await watchCommand(options);
+    });
 
   program
     .command('export')
