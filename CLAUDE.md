@@ -10,7 +10,7 @@ npx vitest run tests/config.test.ts   # 单个测试文件
 npx vitest run -t "加载合法配置"        # 按用例名过滤
 npm run typecheck                     # tsc --noEmit,无类型错误即通过
 npm run login                         # 启动带调试端口的真实 Chrome
-npm run watch                         # 附接 Chrome,被动捕获用户手动搜索/翻页/点详情的响应,按 Enter 入库
+npm run watch                         # 附接 Chrome,支持被动捕获 (按 Enter 入库) 或仿真自动搜索多页拉取 (如 -- --keyword "React" --pages 3)
 npm run export                        # 导出最近一次运行的职位为 CSV
 ```
 
@@ -45,9 +45,14 @@ npm run export                        # 导出最近一次运行的职位为 CSV
 - **发现任务**(阶段 A Task 11):用真实会话观察 Upwork 接口,产出 `tests/fixtures/*.json` 与 `docs/superpowers/specs/upwork-api-findings.md`,已完成。
 - **阶段 B**(`...-phase-b.md`):NetworkCapture、Normalizer、程序化 ListingCollector / DetailCollector、`collect` 命令、SourceResolver 拒绝 categoryFilters —— 代码完成,但 E2E 证实程序化导航不可用,已在 B' 删除 ListingCollector / DetailCollector / `collect`。
 - **阶段 B'**(`...-phase-b-prime.md`):Watcher 被动监听 + `watch` 命令,取代程序化采集。已完成。
-- 后续:长驻 watcher 持久化(增量入库),多 profile 支持。
 
 按计划开发时:每个编码任务严格 TDD(先写失败测试再写最小实现),每任务结束提交一次。
+
+## 已知问题 / 遗留
+
+- **`watch` 真实 E2E 未跑通(`seen=0`)** —— **已解决**。通过在 `Watcher` 类中加入 `setInterval` 定期主动重扫与绑定机制，解决了 Playwright 在 `connectOverCDP` 下 `context.on('page')` 事件漏触发的问题。此外，还在 `watch` 仿真自动提取时引入了自动检测并用 Esc 键关闭详情侧边栏滑块的防阻挡逻辑，确保了全自动交互抓取 100% 的高稳定性。
+- **`watch` 即便 `seen=0` 也会留一条空 `runs` 记录** —— 增量入库要求监听前先 `startRun()`,故无捕获时仍产生一条空 run;`export` 取最近 run 时会对空 run 报「导出 0 个职位」。无害,未处理。
+- **`SourceResolver` 分类筛选**:已随 SourceResolver 一并删除;若将来要按分类/预算/经验筛选,在 watch 模式下由用户直接在 Chrome 里点筛选即可,无需配置项。
 
 ## 约定
 
